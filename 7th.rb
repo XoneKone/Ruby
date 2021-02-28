@@ -51,8 +51,18 @@ def sum_prime number
 end
 
 def main
-	if ARGV.length < 2
-		puts "Hello, World!"
+	if ARGV.length < 1 || ARGV.length > 2
+		puts "Нужно ввести два аргумента!"
+		puts "Для справки выполните скрипт с аргументом '-h'"
+	elsif ARGV[0] == '-h' && ARGV.length == 1
+		puts "Первый аргумент - выбор метода."
+			puts "Второй аргумент- число, для которого вы хотите получить результат."
+			puts "Количество методов: 3."
+			puts "1. Первый метод."
+			puts "2. Второй метод."
+			puts "3. Третий метод."
+	elsif ARGV[0] != '-h' && ARGV.length == 1
+		puts "Для справки выполните скрипт с аргументом '-h'"
 	else
 		case ARGV[0]
 		when '1'
@@ -62,7 +72,7 @@ def main
 		when '3'
 			puts complex_condition ARGV[1].to_i
 		else
-			puts "Больше методов нет!"
+			puts "Нет такого метода!"
 		end
 	end
 end
