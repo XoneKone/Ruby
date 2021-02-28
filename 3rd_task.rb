@@ -7,8 +7,13 @@ ARGV.pop
 
 lang = gets.chomp
 
-unless lang == "Ruby" then
-	puts "Скоро полюбишь Ruby!"
-else
+case lang
+when "Ruby"
 	puts "Ты подлиза :)"
+when "C++"
+	puts "А ты хорош!"
+when "Python"
+	puts "Ого, Датасаентист"
+else
+	puts "Скоро полюбишь Ruby!"	
 end
