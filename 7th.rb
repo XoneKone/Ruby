@@ -21,7 +21,13 @@ end
 
 
 def count_less_three number
-
+	count = 0
+	number.digits.each do |x|
+		if x < 3 then 
+			count += 1
+		end
+	end
+	return count
 end
 
 def complex_condition number
