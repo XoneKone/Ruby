@@ -49,3 +49,22 @@ def sum_prime number
 	end
 	return sum
 end
+
+def main
+	if ARGV.length < 2
+		puts "Hello, World!"
+	else
+		case ARGV[0]
+		when '1'
+			puts sum_noprime_div ARGV[1].to_i
+		when '2'
+			puts count_less_three ARGV[1].to_i
+		when '3'
+			puts complex_condition ARGV[1].to_i
+		else
+			puts "Больше методов нет!"
+		end
+	end
+end
+
+main()
