@@ -31,5 +31,21 @@ def count_less_three number
 end
 
 def complex_condition number
+	count = 0
+	(number-1).downto(1) do |n|
+		if number % n != 0 && number.gcd(n) != 1 && n.gcd(sum_prime(number)) == 1 then
+			count += 1
+		end
+	end
+	return count
+end
 
+def sum_prime number
+	sum = 0
+	number.digits.each do |x|
+		if is_prime(x) then
+			sum += x
+		end
+	end
+	return sum
 end
