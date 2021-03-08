@@ -73,6 +73,7 @@ def main
 end
 
 =begin
+	Problem 21
 	Let d(n) be defined as the sum of proper divisors of n (numbers less than n which divide evenly into n).
 	If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair and each of a and b are called amicable numbers.
 	For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 and 110; therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and 142; so d(284) = 220.
@@ -88,4 +89,24 @@ def problem21
 	p(((1..10000).select{|el| d(d(el)) == el && el != d(el)}).inject(0,:+))
 end
 
-problem21
+#problem21
+
+=begin
+Problem 42
+The nth term of the sequence of triangle numbers is given by, tn = ½n(n+1); so the first ten triangle numbers are:
+1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+By converting each letter in a word to a number corresponding to its alphabetical position and adding these values we form a word value. For example, the word value for SKY is 19 + 11 + 25 = 55 = t10. If the word value is a triangle number then we shall call the word a triangle word.
+How many are triangle words?	
+=end
+
+def t_generator n	
+	(1..n).map { |e|  e * (e + 1) / 2 }.to_a
+end
+
+def problem42
+	words = (File.open("words.txt") { |file| file.read }).delete("\"").split(',')
+	words.map! { |e| e.each_codepoint.to_a.inject(0){|res,var| res + var - 64}  }
+	return words.count {|n| (t_generator 300).include?(n)}
+end
+
+p(problem42)
