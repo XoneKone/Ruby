@@ -14,7 +14,7 @@ def read_list size
   list = []
   size.downto(1) do |i|
     el = STDIN.gets.to_i  
-    list += [el]
+    list << el
   end
   return list
 end
