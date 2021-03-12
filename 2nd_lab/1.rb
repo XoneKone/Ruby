@@ -12,9 +12,9 @@ end
 def read_list size
   puts 'Введите элементы:'
   list = []
-  size.downto(1) do |i|
+  0.upto(size-1) do |i|
     el = STDIN.gets.to_i  
-    list << el
+    list[i] = el
   end
   return list
 end
