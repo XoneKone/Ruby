@@ -1,12 +1,24 @@
 def first_method
-  puts 'Введите список'
-  list = gets.chomp.split.map { |e| e.to_i  }
-  puts list
+  size = ARGV[0].to_i
+  list = read_list size
   puts min list
   puts max list
   puts sum list
   puts prod list
+  print list
+  
 end
+
+def read_list size
+  puts 'Введите элементы:'
+  list = []
+  size.downto(1) do |i|
+    el = STDIN.gets.to_i  
+    list += [el]
+  end
+  return list
+end
+
 
 def min list
   list.min
@@ -24,4 +36,5 @@ def prod list
   list.inject(1,:*)
 end
 
-puts first_method
+
+first_method
