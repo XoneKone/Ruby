@@ -14,7 +14,7 @@ def read_list size
   list = []
   0.upto(size-1) do |i|
     el = STDIN.gets.to_i  
-    list[i] = el
+    list.concat([el])
   end
   return list
 end
