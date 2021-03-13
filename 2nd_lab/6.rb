@@ -5,13 +5,12 @@ def read_from_file input
 end
 
 =begin
-Дан целочисленный массив. Необходимо переставить в обратном
+12. Дан целочисленный массив. Необходимо переставить в обратном
 порядке элементы массива, расположенные между его минимальным и
 максимальным элементами.	
 =end
 
-def task_12
-	list = read_from_file "input.txt"
+def task_12 list
 	max = list[0]
 	i_max = 0
 	min = list[0]
@@ -42,7 +41,33 @@ def task_12
 		j += 1
 	end
 
-	print list 
+	return list 
 end
 
-task_12
+=begin
+24. Дан целочисленный массив. Необходимо найти два наибольших
+элемента.	
+=end
+
+def task_24 list
+	max_el = [0,0]
+	i = 1
+	while i < list.length
+		if list[max_el[0]] < list[i]
+			if list[i] > list[max_el[1]]
+				max_el[0], max_el[1] = max_el[1], i
+			else
+				max_el[0] = i
+			end
+		end
+		i += 1
+	end
+	return [list[max_el[0]],list[max_el[1]]]
+end
+
+def main
+	list = read_from_file "input.txt"
+	puts task_24 list
+end
+
+main()
