@@ -1,6 +1,6 @@
 def first_method
   size = ARGV[0].to_i
-  list = read_list size
+  list = read_from_file
   puts min list
   puts max list
   puts sum list
@@ -19,6 +19,10 @@ def read_list size
   return list
 end
 
+def read_from_file
+  list = IO.read('input.txt').chomp.split
+  return list.map! {|e| e.to_i}
+end
 
 def min list
   list.min
