@@ -115,10 +115,34 @@ def task_48 list
 	return res
 end
 
+=begin
+60. Дан список. Построить массив из элементов, делящихся на свой
+номер и встречающихся в исходном массиве 1 раз.	
+=end
+
+def task_60 list
+	res = []
+	i = 0
+	while i < list.length
+		count = 0
+		current = list[i]
+		for j in (0...list.length)
+			if list[j] == current
+				count += 1
+			end
+		end
+		if count == 1 && current % (i+1) == 0
+			res << current
+		end
+		i+=1
+	end
+
+	return res
+end
 
 def main
 	list = read_from_file "input.txt"
-	puts task_48 list
+	puts task_60 list
 end
 
 main()
