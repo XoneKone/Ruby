@@ -1,12 +1,16 @@
 def first_method
-  size = ARGV[0].to_i
-  list = read_from_file
-  puts min list
-  puts max list
-  puts sum list
-  puts prod list
+  if ARGV.length != 0 
+    if ARGV[0] == '1'
+      puts "Введите размер списка: "
+      size = STDIN.gets.chomp.to_i
+      list = read_list size
+    elsif ARGV[0] == '2'
+      list = read_from_file ARGV[1]
+    end
+  else
+    puts "Нет аргумента"
+  end
   print list
-  
 end
 
 def read_list size
@@ -19,8 +23,8 @@ def read_list size
   return list
 end
 
-def read_from_file
-  list = IO.read('input.txt').chomp.split
+def read_from_file input
+  list = IO.read(input).chomp.split
   return list.map! {|e| e.to_i}
 end
 
