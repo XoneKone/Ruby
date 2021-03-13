@@ -82,9 +82,43 @@ def task_36 list
 	return max_el
 end
 
+=begin
+48. Для введенного списка построить список с номерами элемента, который
+повторяется наибольшее число раз.
+=end
+
+def task_48 list
+	ind, max_el = 0, 0
+	i = 0
+	while i < list.length
+		count = 0
+		current = list[i]
+		for j in (0...list.length)
+			if list[j] == current
+				count += 1
+			end
+		end
+		if count > max_el
+			max_el = count
+			ind = i
+		end
+		i+=1
+	end
+
+	res = []
+	for i in (0...list.length)
+		if list[ind] == list[i]
+			res << i
+		end
+	end
+
+	return res
+end
+
+
 def main
 	list = read_from_file "input.txt"
-	puts task_36 list
+	puts task_48 list
 end
 
 main()
