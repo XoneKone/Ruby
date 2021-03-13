@@ -65,9 +65,26 @@ def task_24 list
 	return [list[max_el[0]],list[max_el[1]]]
 end
 
+=begin
+36. Дан целочисленный массив. Необходимо найти максимальный
+нечетный элемент.
+=end
+
+def task_36 list
+	max_el = list[0] % 2 != 0 ? list[0]: -1
+	i = 1
+	while i < list.length
+		if list[i] > max_el && list[i] % 2 != 0
+			max_el = list[i]
+		end
+		i+=1
+	end
+	return max_el
+end
+
 def main
 	list = read_from_file "input.txt"
-	puts task_24 list
+	puts task_36 list
 end
 
 main()
