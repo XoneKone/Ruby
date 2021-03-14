@@ -46,9 +46,15 @@ end
 =end
 
 def task_48 list
-	
-
-	
+	count_list = (list.map { |e| list.count(e) })
+	most_often = count_list.index(count_list.max)
+	res = []
+	list.each_index do |x|
+		if list[x] == list[most_often]
+			res << x
+		end
+	end
+	return res
 end
 
 =begin
