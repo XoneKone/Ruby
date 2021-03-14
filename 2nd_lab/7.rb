@@ -63,23 +63,7 @@ end
 =end
 
 def task_60 list
-	res = []
-	i = 0
-	while i < list.length
-		count = 0
-		current = list[i]
-		for j in (0...list.length)
-			if list[j] == current
-				count += 1
-			end
-		end
-		if count == 1 && current % (i+1) == 0
-			res << current
-		end
-		i+=1
-	end
-
-	return res
+	list.select {|x| list.count(x)==1 && x % (list.index(x)+1) == 0}
 end
 
 def main
