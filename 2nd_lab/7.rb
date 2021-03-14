@@ -37,15 +37,7 @@ end
 =end
 
 def task_36 list
-	max_el = list[0] % 2 != 0 ? list[0]: -1
-	i = 1
-	while i < list.length
-		if list[i] > max_el && list[i] % 2 != 0
-			max_el = list[i]
-		end
-		i+=1
-	end
-	return max_el
+	return (list.select{|e| e % 2 != 0}).max
 end
 
 =begin
@@ -54,31 +46,9 @@ end
 =end
 
 def task_48 list
-	ind, max_el = 0, 0
-	i = 0
-	while i < list.length
-		count = 0
-		current = list[i]
-		for j in (0...list.length)
-			if list[j] == current
-				count += 1
-			end
-		end
-		if count > max_el
-			max_el = count
-			ind = i
-		end
-		i+=1
-	end
+	
 
-	res = []
-	for i in (0...list.length)
-		if list[ind] == list[i]
-			res << i
-		end
-	end
-
-	return res
+	
 end
 
 =begin
