@@ -22,6 +22,10 @@ def freq str
 	str.count(str[most_often]).to_f / str.length
 end
 
+def palindrom str
+	(str.split.select { |e| e == e.reverse && e.length == 3}).length.to_f / str.split.length
+end
+
 def task3 lines
 	lines.sort_by { |e| freq e}
 end
@@ -34,14 +38,14 @@ def task9 lines
 end
 
 def task10 lines
+	lines.sort_by { |e| palindrom e}
 end
 
 
 def main
 	lines = read_from_file "lines.txt"	
 	p lines[4]
-	p  freq lines[4]
-	p task3 lines	
+	p  task10 lines
 end
 
 
