@@ -8,10 +8,15 @@ def task12 lines
 	lines.sort_by { |e|  e.length }
 end
 
+def task13 lines
+	lines.sort_by { |e| e.scan(/ /).length + 1 }
+end
 
 def main
 	lines = read_from_file "lines.txt"	
-	puts task12 lines
+	p task13 lines
+	p task12 lines
+	
 end
 
 
