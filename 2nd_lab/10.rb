@@ -16,10 +16,14 @@ def task_12 str
 	(alp.scan(/[а-я]/) - str.gsub(/[\d ]/,'').scan(/[а-я]/)).count
 end
 
+def task_18 str
+	 (str.scan(/\d+/).sort_by {|e| e.length})[-1].length
+end
+
 def main
 
 	str = read_from_file 'date.txt'
-	p task_12 str
+	p task_18 str
 
 end
 
