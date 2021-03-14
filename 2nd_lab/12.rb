@@ -9,14 +9,16 @@ def task12 lines
 end
 
 def task13 lines
-	lines.sort_by { |e| e.scan(/ /).length + 1 }
+	lines.sort_by { |e| e.split.length }
+end
+
+def task14 lines
+	lines.sort_by { |e| e.split.index {|e| e =~ /[\d]/} != nil ? e.split.length - e.split.index {|e| e =~ /[\d]/} - 1  : 0}
 end
 
 def main
 	lines = read_from_file "lines.txt"	
-	p task13 lines
-	p task12 lines
-	
+	p task14 lines	
 end
 
 
