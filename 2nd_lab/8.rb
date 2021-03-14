@@ -19,9 +19,28 @@ def task_18 str
 end
 
 def main
+	list = read_from_file "input.txt"
 	str = read_from_file "text.txt"
-	str1 = "sdakjflj1232lkfsjdljf9023u4jfkjs0u13"
-	p  task_18 "14.10.2000sdafasd213.324.23asdee12.12.2001"
-end 
+	str1 = "sdakjflj1232lkfsj13.10.2012dljf9023u4jfkjs0u1314.10.2000"
+	puts "Исходный список: " + list.to_s 
+	puts "Исходная строка: " + str1
+	puts "1. 6-ая задача\n2. 8-ая задача\n3. 12-ая задача\n4. 18-ая задача"
+	print "Выберите задачу: "
 
-main
+	answer = gets.chomp.to_i
+	print "Ответ: "
+	case answer
+	when 1
+		puts (task_6 str).to_s
+	when 2
+		puts (task8 list).to_s
+	when 3
+		puts (task_12 str1).to_s
+	when 4
+		puts (task_18 str1).to_s
+	else
+		puts "Нет такой задачи"
+	end
+end
+
+main()
