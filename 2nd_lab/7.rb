@@ -28,19 +28,7 @@ end
 =end
 
 def task_24 list
-	max_el = [0,0]
-	i = 1
-	while i < list.length
-		if list[max_el[0]] < list[i]
-			if list[i] > list[max_el[1]]
-				max_el[0], max_el[1] = max_el[1], i
-			else
-				max_el[0] = i
-			end
-		end
-		i += 1
-	end
-	return [list[max_el[0]],list[max_el[1]]]
+	return list.sort[-2..-1]
 end
 
 =begin
