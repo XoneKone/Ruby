@@ -142,7 +142,26 @@ end
 
 def main
 	list = read_from_file "input.txt"
-	puts task_60 list
+	puts "Исходный список: " + list.to_s 
+	puts "1. 12-ая задача\n2. 24-ая задача\n3. 36-ая задача\n4. 48-ая задача\n5. 60-ая задача"
+	print "Выберите задачу: "
+
+	answer = gets.chomp.to_i
+	print "Ответ: "
+	case answer
+	when 1
+		puts (task_12 list).to_s
+	when 2
+		puts (task_24 list).to_s
+	when 3
+		puts (task_36 list).to_s
+	when 4
+		puts (task_48 list).to_s
+	when 5
+		puts (task_60 list).to_s
+	else
+		puts "Нет такой задачи"
+	end
 end
 
 main()
