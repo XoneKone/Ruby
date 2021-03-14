@@ -11,9 +11,15 @@ def task_6 str
 	new_str = str.scan(/\d{1,}/).count {|e| e.to_i < 5}
 end
 
+def task_12 str
+	alp = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+	(alp.scan(/[а-я]/) - str.gsub(/[\d ]/,'').scan(/[а-я]/)).count
+end
+
 def main
+
 	str = read_from_file 'date.txt'
-	puts task_6 str
+	p task_12 str
 
 end
 
