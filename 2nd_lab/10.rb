@@ -23,8 +23,24 @@ end
 def main
 
 	str = read_from_file 'date.txt'
-	p task_18 str
+	puts "Исходная строка: " + str
+	puts "1. 6-ая задача\n2. 10-ая задача\n3. 12-ая задача\n4. 18-ая задача"
+	print "Выберите задачу: "
 
+	answer = gets.chomp.to_i
+	print "Ответ: "
+	case answer
+	when 1
+		puts (task_6 str).to_s
+	when 2
+		puts (task_10 str).to_s
+	when 3
+		puts (task_12 str).to_s
+	when 4
+		puts (task_18 str).to_s
+	else
+		puts "Нет такой задачи"
+	end
 end
 
 
