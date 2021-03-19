@@ -39,7 +39,7 @@ class Employee
     end
 
     def mobphone=(mobphone)
-        @mobphone=mobphone
+        @mobphone = self.class.is_valid_mobphone mobphone
     end
 
 
@@ -115,7 +115,7 @@ class Employee
         @surname = surname
         @midname = midname
         @birthdate = birthdate
-        @mobphone = mobphone
+        self.mobphone = mobphone
         @address = address
         @email = email
         @passport = passport
@@ -125,6 +125,24 @@ class Employee
         self.post = post
         self.prevsalary = prevsalary
     end
+
+    def self.is_russian_mobphone? mobphone
+        mobphone.start_with?("+7","8")
+    end
+
+    def self.is_valid_mobphone mobphone
+        raise StandardError, "Это не российский номер" unless self.is_russian_mobphone? mobphone
+       
+        if mobphone.start_with?("+7")
+            mobphone.insert(2,'-')
+            mobphone.insert(6,'-')
+        else
+            mobphone.insert(1,'-')
+            mobphone.insert(5,'-')
+        end
+        return mobphone
+    end
+    
 
     def to_s
         "Это анкета работника:\n" + 
@@ -166,10 +184,10 @@ end
 
 
 test = TestEmployee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostya@mail.ru","032341312","программист",0)
-test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
-test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
-
 puts test
+test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
 puts test1
+test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","19321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
 puts test2
- 
+puts TestEmployee.is_valid_mobphone "8912143258"
+
