@@ -89,7 +89,7 @@ class Employee
     end
 
     def prevnamework=(prevnamework)
-        @prevnamework= @workexp == 0 ? "" : prevnamework
+        @prevnamework= @workexp == 0 ? "NA" : prevnamework
     end
 
     def post
@@ -97,7 +97,7 @@ class Employee
     end
 
     def post=(post)
-        @post= @workexp == 0 ? "" : post
+        @post= @workexp == 0 ? "NA" : post
     end
 
     def prevsalary
@@ -125,8 +125,51 @@ class Employee
         self.post = post
         self.prevsalary = prevsalary
     end
+
+    def to_s
+        "Это анкета работника:\n" + 
+        "Фамилия: #{@name}\n" +
+        "Имя: #{@surname}\n" +
+        "Отчество: #{@midname}\n" +
+        "Дата рождения: #{@birthdate}\n" +
+        "Номер телефона: #{@mobphone}\n" +
+        "Адрес: #{@address}\n" +
+        "E-mail: #{@email}\n" + 
+        "Паспорт: #{@passport}\n" +
+        "Специальность: #{@specialization}\n" +
+        "Стаж работы: #{@workexp}\n" + 
+        "Предыдущее место работы: #{@prevnamework}\n" +
+        "Должность: #{@post}\n" +
+        "Предыдущая зарплата: #{@prevsalary}\n" 
+    end
+end
+
+class TestEmployee < Employee
+
+    def to_s
+        "Это анкета  ТЕСТОГО работника:\n" + 
+        "Фамилия: #{@name}\n" +
+        "Имя: #{@surname}\n" +
+        "Отчество: #{@midname}\n" +
+        "Дата рождения: #{@birthdate}\n" +
+        "Номер телефона: #{@mobphone}\n" +
+        "Адрес: #{@address}\n" +
+        "E-mail: #{@email}\n" + 
+        "Паспорт: #{@passport}\n" +
+        "Специальность: #{@specialization}\n" +
+        "Стаж работы: #{@workexp}\n" + 
+        "Предыдущее место работы: #{@prevnamework}\n" +
+        "Должность: #{@post}\n" +
+        "Предыдущая зарплата: #{@prevsalary}\n\n" 
+    end
 end
 
 
-test = Employee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostya@mail.ru","032341312","программист",0,"дфд","жфв","по")
-p test
+test = TestEmployee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostya@mail.ru","032341312","программист",0)
+test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
+test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
+
+puts test
+puts test1
+puts test2
+ 
