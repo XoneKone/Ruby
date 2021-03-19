@@ -57,7 +57,7 @@ class Employee
     end
 
     def email=(email)
-        @email=email
+        @email= self.class.is_valid_email email
     end
 
     def passport
@@ -117,7 +117,7 @@ class Employee
         @birthdate = birthdate
         self.mobphone = mobphone
         @address = address
-        @email = email
+        self.email = email
         @passport = passport
         @specialization = specialization
         @workexp = workexp
@@ -143,6 +143,14 @@ class Employee
         return mobphone
     end
     
+    def self.is_email? email
+        (/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/ =~ email ) != nil 
+    end
+
+    def self.is_valid_email email
+        raise StandardError, "Неправильный email" unless self.is_email? email
+        return email.downcase
+    end
 
     def to_s
         "Это анкета работника:\n" + 
@@ -183,11 +191,11 @@ class TestEmployee < Employee
 end
 
 
-test = TestEmployee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostya@mail.ru","032341312","программист",0)
+test = TestEmployee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","032341312","программист",0)
 puts test
-test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
+test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","genayandex.ru","021341812","программист",1,"МТС","Junior",30000)
 puts test1
-test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","19321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
+test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
 puts test2
-puts TestEmployee.is_valid_mobphone "8912143258"
+
 
