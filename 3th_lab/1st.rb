@@ -4,7 +4,7 @@ class Employee
     end
 
     def fullname=(fullname)
-        @fullname=fullname
+        @fullname= self.class.is_valid_fullname fullname
     end
 
     def birthdate
@@ -93,7 +93,7 @@ class Employee
 
 
     def initialize(fullname,birthdate,mobphone,address,email,passport,specialization,workexp=0,prevnamework="",post="",prevsalary=0)
-        @fullname = fullname
+        self.fullname = fullname
         @birthdate = birthdate
         self.mobphone = mobphone
         @address = address
