@@ -17,7 +17,7 @@ class Employee
         @birthdate
     end
 
-    def birtdate=(birthdate)
+    def birthdate=(birthdate)
         begin
             @birthdate= self.class.is_valid_birthdate birthdate
         rescue StandardError => e
@@ -134,7 +134,7 @@ class Employee
     end
 
     def self.is_valid_mobphone mobphone
-        raise StandardError, "Это не российский номер" unless self.is_russian_mobphone? mobphone
+        raise StandardError, "Неправильный номер" unless self.is_russian_mobphone? mobphone
        
         if mobphone.start_with?("+7")
             mobphone.insert(2,'-')
@@ -171,7 +171,7 @@ class Employee
     end
 
     def self.is_birthdate? birthdate
-        (/([0-2]\d|3[0-1]|\d).(0[1-9]|1[0-2]).(\d{2}|\d{4})/ =~ birthdate) != nil
+        (/^([0-2]\d|3[0-1]|\d)\.(0[1-9]|1[0-2])\.(\d{2}|\d{4})$/ =~ birthdate) != nil
     end
 
     def self.is_valid_birthdate birthdate
@@ -216,7 +216,6 @@ class TestEmployee < Employee
             print "Введите ФИО тут: "
             begin
                 fullname = STDIN.gets.chomp
-                puts fullname
                 puts self.is_valid_fullname fullname
             rescue StandardError => e
                 puts e.message
@@ -265,14 +264,86 @@ class TestEmployee < Employee
 
 end
 
+class TerminalViewListEmployee
+    include Enumerable
 
-#test = TestEmployee.new("Хван Константин Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","032341312","программист",0)
-#puts test
-#test1 = TestEmployee.new("Горин Геннадий Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
-#puts test1
-#test2 = TestEmployee.new("Иванов Иван Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
-#puts test2
+    attr_accessor :name, :employees
 
-fullname = "Горин Геннадий Геннадьевич заде"
-TestEmployee.test
+    def initialize(name)
+        @name =name
+        @employees = []
+    end
+    
+    def add_employees(*employees)
+        employees.each do |e|
+            puts "Проверьте корректность введенных данных\n"
+            puts e
+            puts "Данные корректны? (да/нет)"
+            answer = STDIN.gets.chomp
+            case answer
+                when "да"
+                    @employees << e
+                when "нет"
+                    begin
+                        puts "Введите данные заново."
+                        print "ФИО: "
+                        fullname = STDIN.gets.chomp
+                        print "Дата рождения: "
+                        birthdate = STDIN.gets.chomp
+                        print "Номер телефона: "
+                        mobphone = STDIN.gets.chomp
+                        print "Адрес: "
+                        address = STDIN.gets.chomp
+                        print "E-mail: "
+                        email = STDIN.gets.chomp
+                        print "Паспорт: "
+                        passport = STDIN.gets.chomp
+                        print "Специальность: "
+                        specialization = STDIN.gets.chomp
+                        print "Стаж: "
+                        workexp = STDIN.gets.chomp.to_i
+                        print "Название предыдущей работы: "
+                        prevnamework = STDIN.gets.chomp
+                        print "Должность: "
+                        post = STDIN.gets.chomp
+                        print "Предыдущая зарплата: "
+                        prevsalary = STDIN.gets.chomp.to_i
+                        new_emp = TestEmployee(fullname,birthdate,mobphone,address,email,passport,specialization,workexp,prevnamework,post,prevsalary)
+                    rescue StandardError => e
+                        e.message
+                    end
+                else
+            end
+        end
+    end
+
+    def to_s
+        "#{@name} list: #{@employees.join(',')}"
+    end
+
+    def each
+        @employees.each {|employee| yield employee}
+    end
+
+end
+
+def main
+    test1 = TestEmployee.new("Хван Константин Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","0323413212","программист",0)
+
+    test2 = TestEmployee.new("Салтыков - щЕдрин Иван-Руслан Ахмед заде","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","0213418212","программист",1,"МТС","Junior",30000)
+
+    test3 = TestEmployee.new("Иванов Иван Иванович","13.02.1994","89321132213","ул. Пыльная, д. Невидный","ivan@mail.ru","0321251312","Инженер",5,"Газпром","Главный инженер",200000)
+
+    puts ""
+   
+    listEmployees = TerminalViewListEmployee.new("Кандидаты")
+    listEmployees.add_employees(test1,test2,test3)
+    listEmployees.each do |e|
+    puts e
+    end
+end
+
+
+main
+#TestEmployee.test
 
