@@ -6,7 +6,11 @@ class Employee
     end
 
     def fullname=(fullname)
-        @fullname= self.class.is_valid_fullname fullname
+        begin
+            @fullname= self.class.is_valid_fullname fullname
+        rescue  StandardError => e
+            puts e.message
+        end
     end
 
     def birthdate
@@ -14,7 +18,11 @@ class Employee
     end
 
     def birtdate=(birthdate)
-        @birthdate= self.class.is_valid_birthdate birthdate
+        begin
+            @birthdate= self.class.is_valid_birthdate birthdate
+        rescue StandardError => e
+            puts e.message
+        end     
     end
 
 
@@ -23,7 +31,11 @@ class Employee
     end
 
     def mobphone=(mobphone)
-        @mobphone = self.class.is_valid_mobphone mobphone
+        begin
+            @mobphone = self.class.is_valid_mobphone mobphone
+        rescue StandardError => e
+            puts e.message
+        end
     end
 
 
@@ -41,7 +53,11 @@ class Employee
     end
 
     def email=(email)
-        @email= self.class.is_valid_email email
+        begin
+            @email= self.class.is_valid_email email
+        rescue StandardError => e
+            puts e.message
+        end 
     end
 
     def passport
@@ -49,7 +65,12 @@ class Employee
     end
 
     def passport=(passport)
-        @passport = self.class.is_valid_passport passport
+        begin
+            @passport = self.class.is_valid_passport passport  
+        rescue StandardError => e
+            puts e.message
+        end
+       
     end
 
     def specialization
@@ -187,10 +208,59 @@ end
 
 class TestEmployee < Employee
 
+    def self.test
+        print "1. ФИО\n2. Телефон\n3. Дата рождения\n 4. E-mail\n5. Паспорт\nВведите номер: "
+        answer = STDIN.gets.chomp.to_i
+        case answer
+        when 1
+            print "Введите ФИО тут: "
+            begin
+                fullname = STDIN.gets.chomp
+                puts fullname
+                puts self.is_valid_fullname fullname
+            rescue StandardError => e
+                puts e.message
+            end
+        when 2
+            print "Введите номер телефона тут: "
+            begin
+                mobphone = STDIN.gets.chomp
+                puts self.is_valid_mobphone mobphone
+            rescue StandardError => e
+                puts e.message
+            end
+        when 3
+            print "Введите дату рождения тут: "
+            begin
+                birthdate = STDIN.gets.chomp
+                puts self.is_valid_birthdate birthdate
+            rescue StandardError => e
+                puts e.message
+            end
+        when 4
+            print "Введите e-mail тут: "
+            begin
+                email = STDIN.gets.chomp
+                puts self.is_valid_email email
+            rescue StandardError => e
+                puts e.message
+            end
+        when 5
+            print "Введите паспорт тут: "
+            begin
+                passport = STDIN.gets.chomp
+                puts self.is_valid_passport
+            rescue StandardError => e
+                puts e.message
+            end   
+        else
+            puts "Нет такого номера"
+        end
+    end
+
     def to_s
         "Это анкета  ТЕСТОГО работника:\n" +
         super() 
-
     end
 
 end
@@ -204,5 +274,5 @@ end
 #puts test2
 
 fullname = "Горин Геннадий Геннадьевич заде"
-p TestEmployee.is_valid_passport "0320923374"
+TestEmployee.test
 
