@@ -1,29 +1,11 @@
 class Employee
-    def name
-        @name
+    def fullname
+        @fullname
     end
 
-    def name=(name)
-        @name=name
+    def fullname=(fullname)
+        @fullname=fullname
     end
-
-    def surname
-        @surname
-    end
-
-    def surname=(surname)
-        @surname=surname
-    end
-
-
-    def midname
-        @midname
-    end
-
-    def midname=(midname)
-        @midname=midname
-    end
-
 
     def birthdate
         @birthdate
@@ -110,10 +92,8 @@ class Employee
     
 
 
-    def initialize(name,surname,midname,birthdate,mobphone,address,email,passport,specialization,workexp=0,prevnamework="",post="",prevsalary=0)
-        @name = name
-        @surname = surname
-        @midname = midname
+    def initialize(fullname,birthdate,mobphone,address,email,passport,specialization,workexp=0,prevnamework="",post="",prevsalary=0)
+        @fullname = fullname
         @birthdate = birthdate
         self.mobphone = mobphone
         @address = address
@@ -152,31 +132,23 @@ class Employee
         return email.downcase
     end
 
-    def to_s
-        "Это анкета работника:\n" + 
-        "Фамилия: #{@name}\n" +
-        "Имя: #{@surname}\n" +
-        "Отчество: #{@midname}\n" +
-        "Дата рождения: #{@birthdate}\n" +
-        "Номер телефона: #{@mobphone}\n" +
-        "Адрес: #{@address}\n" +
-        "E-mail: #{@email}\n" + 
-        "Паспорт: #{@passport}\n" +
-        "Специальность: #{@specialization}\n" +
-        "Стаж работы: #{@workexp}\n" + 
-        "Предыдущее место работы: #{@prevnamework}\n" +
-        "Должность: #{@post}\n" +
-        "Предыдущая зарплата: #{@prevsalary}\n" 
+    def self.is_fullname? fullname
+        (/[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[А-Я][а-я]*(\s[а-яА-Я]*)?$/ =~ fullname.rstrip.lstrip) != nil && fullname[/[0-9a-zA-Z]/] == nil
     end
-end
 
-class TestEmployee < Employee
+    def self.is_valid_fullname fullname
+        raise StandardError, "Неправильное ФИО" unless self.is_fullname? fullname
+        name = fullname.lstrip.rstrip[/[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[А-Я][а-я]*(\s[а-яА-Я]*)?$/].gsub(/\s[-]\s/,'-').split
+        name.map! {|e| e[/[-]/]==nil ? e.capitalize: e.split('-').map!{|k| k.capitalize}.join('-') }
+        if name.length == 4 
+             name[-1].downcase! 
+        end
+
+        return name.join(" ")
+    end
 
     def to_s
-        "Это анкета  ТЕСТОГО работника:\n" + 
-        "Фамилия: #{@name}\n" +
-        "Имя: #{@surname}\n" +
-        "Отчество: #{@midname}\n" +
+        "ФИО: #{@fullname}\n" +
         "Дата рождения: #{@birthdate}\n" +
         "Номер телефона: #{@mobphone}\n" +
         "Адрес: #{@address}\n" +
@@ -190,12 +162,23 @@ class TestEmployee < Employee
     end
 end
 
+class TestEmployee < Employee
 
-test = TestEmployee.new("Хван","Константин","Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","032341312","программист",0)
-puts test
-test1 = TestEmployee.new("Горин","Геннадий","Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","genayandex.ru","021341812","программист",1,"МТС","Junior",30000)
-puts test1
-test2 = TestEmployee.new("Иванов","Иван","Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
-puts test2
+    def to_s
+        "Это анкета  ТЕСТОГО работника:\n" +
+        super() 
+
+    end
+end
 
 
+#test = TestEmployee.new("Хван Константин Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","032341312","программист",0)
+#puts test
+#test1 = TestEmployee.new("Горин Геннадий Геннадьевич","12.05.1999","8912143258","ул. Красная, д. Колотушкина","gena@yandex.ru","021341812","программист",1,"МТС","Junior",30000)
+#puts test1
+#test2 = TestEmployee.new("Иванов Иван Иванович","13.02.1994","89321132213","ул. Пыльная, д. невидный","ivan@mail.ru","032125312","Инженер",5,"Газпром","Главный инженер",200000)
+#puts test2
+
+fullname = "Горин Геннадий Геннадьевич заде"
+
+p TestEmployee.is_valid_fullname "Салтыков - щЕдрин Иван-Руслан Ахмед заде"
