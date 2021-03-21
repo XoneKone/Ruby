@@ -276,16 +276,16 @@ class TerminalViewListEmployee
     
     def add_employees(*employees)
         employees.each do |e|
-            puts "Проверьте корректность введенных данных\n"
+            puts "\nПроверьте корректность введенных данных:\n"
             puts e
-            puts "Данные корректны? (да/нет)"
+            puts "\nДанные корректны? (да/нет)\n"
             answer = STDIN.gets.chomp
             case answer
                 when "да"
                     @employees << e
                 when "нет"
                     begin
-                        puts "Введите данные заново."
+                        puts "\nВведите данные заново."
                         print "ФИО: "
                         fullname = STDIN.gets.chomp
                         print "Дата рождения: "
@@ -308,9 +308,9 @@ class TerminalViewListEmployee
                         post = STDIN.gets.chomp
                         print "Предыдущая зарплата: "
                         prevsalary = STDIN.gets.chomp.to_i
-                        new_emp = TestEmployee(fullname,birthdate,mobphone,address,email,passport,specialization,workexp,prevnamework,post,prevsalary)
+                        @employees << TestEmployee.new(fullname,birthdate,mobphone,address,email,passport,specialization,workexp,prevnamework,post,prevsalary)
                     rescue StandardError => e
-                        e.message
+                       p e.message
                     end
                 else
             end
@@ -341,6 +341,7 @@ def main
     listEmployees.each do |e|
     puts e
     end
+    puts listEmployees
 end
 
 
