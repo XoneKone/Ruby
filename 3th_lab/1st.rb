@@ -49,7 +49,7 @@ class Employee
     end
 
     def passport=(passport)
-        @passport = passport
+        @passport = self.class.is_valid_passport passport
     end
 
     def specialization
@@ -160,6 +160,16 @@ class Employee
         end
         return DateTime.strptime(birthdate,'%d.%m.%y').strftime('%d.%m.%Y')
     end
+
+    def self.is_passport? passport
+        (/^([0-9]{10})$/ =~ passport) != nil
+    end
+
+    def self.is_valid_passport passport
+        raise StandardError, "Неправильный номер паспорта" unless self.is_passport? passport
+        return passport.insert(2,' ').insert(5,' ')
+    end
+
     def to_s
         "ФИО: #{@fullname}\n" +
         "Дата рождения: #{@birthdate}\n" +
@@ -182,6 +192,7 @@ class TestEmployee < Employee
         super() 
 
     end
+
 end
 
 
@@ -193,5 +204,5 @@ end
 #puts test2
 
 fullname = "Горин Геннадий Геннадьевич заде"
+p TestEmployee.is_valid_passport "0320923374"
 
-p TestEmployee.is_valid_fullname "Салтыков - щЕдрин Иван-Руслан Ахмед заде"
