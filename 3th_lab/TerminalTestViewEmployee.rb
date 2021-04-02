@@ -1,12 +1,45 @@
+require_relative "ListEmployee"
+
+####################################
+=begin
+        Класс TerminalViewListEmployee
+=end
+####################################
+
 class TerminalViewListEmployee
     include Enumerable
 
-    attr_accessor :name, :employees
+    attr_accessor :list_employee
 
-    def initialize(name)
-        @name =name
-        @employees = []
+    def initialize()
+        self.list_employee = ListEmployee.new()
     end
+
+    def show
+        
+    end
+
+    def add employee
+    end
+
+    def find string
+    end
+
+    def change
+    end
+
+    def delete
+    end
+
+    def save
+    end
+    
+    def close
+    end
+
+    def sort (*by)
+    end
+
     
     def add_employees(*employees)
         employees.each do |e|
@@ -44,7 +77,7 @@ class TerminalViewListEmployee
                         prevsalary = STDIN.gets.chomp.to_i
                         @employees << TestEmployee.new(fullname,birthdate,mobphone,address,email,passport,specialization,workexp,prevnamework,post,prevsalary)
                     rescue ArgumentError => e
-                       p e.message
+                        p e.message
                     end
                 else
             end

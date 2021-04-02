@@ -58,5 +58,38 @@ class TestEmployee < Employee
 
 end
 
-test1 = TestEmployee.new("Хван Константин Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","0323413212","программист",0)
-print test1
+#test1 = TestEmployee.new("Хван Константин Леонидович","14.10.2000","8918213213","ул. Пушкина, д. Колотушкина","kostYa@mail.ru","0323413212","программист",0)
+#print test1
+
+
+employee_list = []
+
+def read_list(path,employee_list)
+    begin
+    data = IO.read(path).split("|\n")
+    rescue Errno::ENOENT => error
+        p error.message
+    end
+    data.each do |emp|
+        fields = emp.split("\n")
+        employee_list << try_parse(fields)
+    end
+end
+
+def try_parse fields
+    begin
+        p fields
+        emp = Employee.new(*fields)
+
+    rescue ArgumentError => error
+        p error.message
+    end
+    return emp
+end
+
+read_list("data.txt",employee_list)
+
+employee_list.each do |el|
+    puts el
+end
+
