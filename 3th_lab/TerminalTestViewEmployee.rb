@@ -16,7 +16,8 @@ class TerminalViewListEmployee
     end
 
     def show
-        
+        list_employee.read_list "data.txt"
+        puts list_employee.show
     end
 
     def add employee
@@ -88,8 +89,6 @@ class TerminalViewListEmployee
         "#{@name} list: #{@employees.join(',')}"
     end
 
-    def each
-        @employees.each {|employee| yield employee}
-    end
+    
 
 end

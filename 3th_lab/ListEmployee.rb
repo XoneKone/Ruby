@@ -1,19 +1,21 @@
 require_relative 'Employee'
-####################################
-=begin
-        Класс ListEmployee
-=end
-####################################
+
+############################################################################################################
+#                                                                                                          #
+#                                       Class ListEmployee                                                 #
+#                                                                                                          #
+############################################################################################################
 
 class ListEmployee
+    include Enumerable
+
     attr_accessor :employee_list
 
     def initialize(path)
         self.employee_list = []
-        self.read_list path
     end
 
-    def read_list path
+    def self.read_list path
         begin
         data = IO.read(path).split("|\n")
        
@@ -28,28 +30,35 @@ class ListEmployee
         
     end
 
-    def add fields
+    def self.add fields
         self.employee_list << Employee.new(*fields)
     end
 
-    def change employee
+    def self.change employee
+        
     end
 
-    def delete employee
+    def self.delete employee
     end
 
-    def write_list
+    def self.write_list
     end
 
-    def find string
+    def self.find string
     end
 
-    def show
+    def self.show
         self.employee_list.join("\n")
     end
 
-    def sort
+    def self.sort
     end
+
+
+    def each
+        @employee_list.each {|employee_list| yield employee_list}
+    end
+
 end
 
 lst = ListEmployee.new('data.txt')

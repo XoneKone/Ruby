@@ -24,11 +24,6 @@ class Employee
             @fullname = self.class.is_valid_fullname fullname
         rescue ArgumentError=> e
             puts e.message
-            until self.class.is_fullname? fullname
-                print "Введите корректное ФИО: "
-                fullname = gets.chomp
-            end
-            @fullname = self.class.is_valid_fullname fullname
         end
         
     end
@@ -42,11 +37,6 @@ class Employee
             @birthdate = self.class.is_valid_birthdate birthdate
         rescue ArgumentError => e
             puts e.message
-            until self.class.birthdate? birthdate
-                print "Введите корректную дату рождения: "
-                birthdate = gets.chomp
-            end
-            @birthdate = self.class.is_valid_birthdate birthdate
         end
         
     end
@@ -61,11 +51,6 @@ class Employee
             @mobphone = self.class.is_valid_mobphone mobphone
         rescue ArgumentError => e
             puts e.message
-            until self.class.is_russian_mobphone? mobphone
-                print "Введите корректный номер телефона: "
-                mobphone = gets.chomp
-            end
-            @mobphone = self.class.is_valid_mobphone mobphone
         end
         
     end
@@ -89,11 +74,6 @@ class Employee
             @email = self.class.is_valid_email email    
         rescue ArgumentError => e
             puts e.message
-            until self.class.is_email? email
-                print "Введите корректный email: "
-                email = gets.chomp
-            end
-            @email = self.class.is_valid_email email
         end      
     end
 
@@ -106,11 +86,6 @@ class Employee
             @passport = self.class.is_valid_passport passport    
         rescue ArgumentError => e
             puts e.message
-            until self.class.is_passport? passport
-                print "Введите корректный email: "
-                passport = gets.chomp
-            end
-            @passport = self.class.is_valid_passport passport
         end     
     end
 
@@ -241,17 +216,17 @@ class Employee
     #######################################################################################################
     
     def to_s
-        "ФИО: #{fullname}\t" +
-        "Дата рождения: #{birthdate}\t" +
-        "Номер телефона: #{mobphone}\t" +
-        "Адрес: #{address}\t" +
-        "E-mail: #{email}\t" + 
-        "Паспорт: #{passport}\t" +
-        "Специальность: #{specialization}\t" +
-        "Стаж работы: #{workexp}\t" + 
-        "Предыдущее место работы: #{prevnamework}\t" +
-        "Должность: #{post}\t" +
-        "Предыдущая зарплата: #{prevsalary}\t\n" 
+        "ФИО: #{fullname}\n" +
+        "Дата рождения: #{birthdate}\n" +
+        "Номер телефона: #{mobphone}\n" +
+        "Адрес: #{address}\n" +
+        "E-mail: #{email}\n" + 
+        "Паспорт: #{passport}\n" +
+        "Специальность: #{specialization}\n" +
+        "Стаж работы: #{workexp}\n" + 
+        "Предыдущее место работы: #{prevnamework}\n" +
+        "Должность: #{post}\n" +
+        "Предыдущая зарплата: #{prevsalary}\n\n" 
     end
 end
 
