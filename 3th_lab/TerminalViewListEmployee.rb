@@ -15,7 +15,7 @@ class TerminalViewListEmployee
     def initialize()
         self.list_employee = ListEmployee.new('data.txt')
     end
-
+    
     def show    
       self.list_employee.show
     end
