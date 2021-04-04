@@ -1,9 +1,10 @@
 require_relative 'Employee'
-####################################
-=begin
-        Класс ListEmployee
-=end
-####################################
+
+############################################################################################################
+#                                                                                                          #
+#                                       Class ListEmployee                                                 #
+#                                                                                                          #
+############################################################################################################
 
 class ListEmployee
 
@@ -28,10 +29,11 @@ class ListEmployee
         self.employee_list.push(employee) 
     end
 
-    def change employee
+    def self.change employee
+        
     end
 
-    def delete employee
+    def self.delete employee
     end
 
     def write_list
@@ -69,8 +71,14 @@ class ListEmployee
     end
     end
 
-    def sort
+    def self.sort
     end
+
+
+    def each
+        @employee_list.each {|employee_list| yield employee_list}
+    end
+
 end
 
 lst = ListEmployee.new('data.txt')
