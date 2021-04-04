@@ -1,4 +1,5 @@
 require "date"
+require_relative "Validator"
 
     #######################################################################################################
     #                                                                                                     #
@@ -8,6 +9,8 @@ require "date"
 
 
 class Employee
+
+    include Validator
 
     #######################################################################################################
     #                                                                                                     #
@@ -20,12 +23,7 @@ class Employee
     end
 
     def fullname=(fullname)
-        begin
-            @fullname = self.class.is_valid_fullname fullname
-        rescue ArgumentError=> e
-            puts e.message
-        end
-        
+        @fullname = Validator.is_valid_fullname fullname
     end
 
     def birthdate
@@ -33,11 +31,7 @@ class Employee
     end
 
     def birthdate=(birthdate)
-        begin
-            @birthdate = self.class.is_valid_birthdate birthdate
-        rescue ArgumentError => e
-            puts e.message
-        end
+        @birthdate = Validator.is_valid_birthdate birthdate
         
     end
 
@@ -47,12 +41,7 @@ class Employee
     end
 
     def mobphone=(mobphone)
-        begin
-            @mobphone = self.class.is_valid_mobphone mobphone
-        rescue ArgumentError => e
-            puts e.message
-        end
-        
+        @mobphone = Validator.is_valid_mobphone mobphone  
     end
 
 
@@ -70,11 +59,7 @@ class Employee
     end
 
     def email=(email)
-        begin
-            @email = self.class.is_valid_email email    
-        rescue ArgumentError => e
-            puts e.message
-        end      
+        @email = Validator.is_valid_email email    
     end
 
     def passport
@@ -82,11 +67,7 @@ class Employee
     end
 
     def passport=(passport)
-        begin
-            @passport = self.class.is_valid_passport passport    
-        rescue ArgumentError => e
-            puts e.message
-        end     
+        @passport = Validator.is_valid_passport passport       
     end
 
     def specialization
@@ -155,59 +136,7 @@ class Employee
     #                                                                                                     #
     #######################################################################################################
 
-    def self.is_russian_mobphone? mobphone
-        (/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ =~ mobphone) != nil 
-    end
-
-    def self.is_valid_mobphone mobphone
-        raise ArgumentError, "Неправильный номер" unless self.is_russian_mobphone? mobphone
-        return mobphone.gsub('-','').gsub('(','').gsub(')','').gsub(' ','').gsub('+','').insert(1,'-').insert(5,'-')
-    end
     
-    def self.is_email? email
-        (/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/ =~ email ) != nil 
-    end
-
-    def self.is_valid_email email
-        raise ArgumentError, "Неправильный email" unless self.is_email? email
-        return email.downcase
-    end
-
-    def self.is_fullname? fullname
-        (/[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[А-Я][а-я]*(\s[а-яА-Я]*)?$/ =~ fullname.rstrip.lstrip) != nil && fullname[/[0-9a-zA-Z]/] == nil
-    end
-
-    def self.is_valid_fullname fullname
-        raise ArgumentError, "Неправильное ФИО" unless self.is_fullname? fullname
-        name = fullname.lstrip.rstrip[/[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[а-яА-я]*(\s?[-]\s?[а-яА-Я]*)?\s[А-Я][а-я]*(\s[а-яА-Я]*)?$/].gsub(/\s[-]\s/,'-').split
-        name.map! {|e| e[/[-]/]==nil ? e.capitalize: e.split('-').map!{|k| k.capitalize}.join('-') }
-        if name.length == 4 
-            name[-1].downcase! 
-        end
-
-        return name.join(" ")
-    end
-
-    def self.is_birthdate? birthdate
-        (/^([0-2]\d|3[0-1]|\d)\.(0[1-9]|1[0-2])\.(\d{2}|\d{4})$/ =~ birthdate) != nil
-    end
-
-    def self.is_valid_birthdate birthdate
-        raise ArgumentError, "Неправильный формат даты" unless self.is_birthdate? birthdate
-        unless birthdate[/.\d{4}/] == nil
-            return DateTime.strptime(birthdate,'%d.%m.%Y').strftime('%d.%m.%Y')
-        end
-        return DateTime.strptime(birthdate,'%d.%m.%y').strftime('%d.%m.%Y')
-    end
-
-    def self.is_passport? passport
-        (/^([0-9]{10})$/ =~ passport) != nil
-    end
-
-    def self.is_valid_passport passport
-        raise ArgumentError, "Неправильный номер паспорта" unless self.is_passport? passport
-        return passport.insert(2,' ').insert(5,' ')
-    end
 
     #######################################################################################################
     #                                                                                                     #
@@ -216,17 +145,17 @@ class Employee
     #######################################################################################################
     
     def to_s
-        "ФИО: #{fullname}\n" +
-        "Дата рождения: #{birthdate}\n" +
-        "Номер телефона: #{mobphone}\n" +
-        "Адрес: #{address}\n" +
-        "E-mail: #{email}\n" + 
-        "Паспорт: #{passport}\n" +
-        "Специальность: #{specialization}\n" +
-        "Стаж работы: #{workexp}\n" + 
-        "Предыдущее место работы: #{prevnamework}\n" +
-        "Должность: #{post}\n" +
-        "Предыдущая зарплата: #{prevsalary}\n\n" 
+        "#{fullname}\n" +
+        "#{birthdate}\n" +
+        "#{mobphone}\n" +
+        "#{address}\n" +
+        "#{email}\n" + 
+        "#{passport}\n" +
+        "#{specialization}\n" +
+        "#{workexp}\n" + 
+        "#{prevnamework}\n" +
+        "#{post}\n" +
+        "#{prevsalary}\n\n" 
     end
 end
 
