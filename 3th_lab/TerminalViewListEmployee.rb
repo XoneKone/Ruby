@@ -1,5 +1,5 @@
 require_relative "ListEmployee"
-
+require_relative "Validator"
 
 ############################################################################################################
 #                                                                                                          #
@@ -8,7 +8,7 @@ require_relative "ListEmployee"
 ############################################################################################################
 
 class TerminalViewListEmployee
-
+    include Validator
 
     attr_accessor :list_employee
 
@@ -26,6 +26,11 @@ class TerminalViewListEmployee
 
             print "ФИО: "
             fullname = STDIN.gets.chomp
+            unless Validator.is_fullname? fullname
+                puts "Некоректное ФИО!\nВведите заново: "
+                fullname = STDIN.gets.chomp
+            end
+            fullname = Validator.is_valid_fullname fullname
 
             print "Дата рождения: "
             birthdate = STDIN.gets.chomp

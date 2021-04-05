@@ -81,6 +81,3 @@ class ListEmployee
     end
 
 end
-
-lst = ListEmployee.new('data.txt')
-
