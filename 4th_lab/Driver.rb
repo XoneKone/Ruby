@@ -23,7 +23,7 @@ class Driver
     end
 
     def fullname=(fullname)
-        @fullname = Validator.is_valid_fullname fullname
+        @fullname = Validator.to_valid_fullname fullname
     end
 
     def birthdate
@@ -31,7 +31,7 @@ class Driver
     end
 
     def birthdate=(birthdate)
-        @birthdate = Validator.is_valid_birthdate birthdate
+        @birthdate = Validator.to_valid_birthdate birthdate
         
     end
 
@@ -41,7 +41,7 @@ class Driver
     end
 
     def mobphone=(mobphone)
-        @mobphone = Validator.is_valid_mobphone mobphone  
+        @mobphone = Validator.to_valid_mobphone mobphone  
     end
 
 
@@ -59,7 +59,7 @@ class Driver
     end
 
     def passport=(passport)
-        @passport = Validator.is_valid_passport passport       
+        @passport = Validator.to_valid_passport passport       
     end
 
     def category
@@ -93,7 +93,7 @@ class Driver
     #                                                                                                     #
     #######################################################################################################
 
-    def initialize(fullname,birthdate,mobphone,address,email,passport,category,driverexp=0,salary)
+    def initialize(fullname,birthdate,mobphone,address,passport,category,salary,driverexp=0)
         self.fullname = fullname
         self.birthdate = birthdate
         self.mobphone = mobphone
@@ -123,13 +123,10 @@ class Driver
         "#{birthdate}\n" +
         "#{mobphone}\n" +
         "#{address}\n" +
-        "#{email}\n" + 
         "#{passport}\n" +
-        "#{specialization}\n" +
-        "#{workexp}\n" + 
-        "#{prevnamework}\n" +
-        "#{post}\n" +
-        "#{prevsalary}\n\n" 
+        "#{category}\n" +
+        "#{salary}\n" + 
+        "#{driverexp}\n\n" 
     end
 end
 
