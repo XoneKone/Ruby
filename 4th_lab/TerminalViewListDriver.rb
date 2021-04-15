@@ -1,32 +1,32 @@
-require_relative 'ListEmployee'
+require_relative 'ListDriver'
 require_relative 'Validator'
 
 ############################################################################################################
 #                                                                                                          #
-#                                     Class TerminalViewListEmployee                                       #
+#                                     Class TerminalViewListDriver                                       #
 #                                                                                                          #
 ############################################################################################################
 
-class TerminalViewListEmployee
+class TerminalViewListDriver
   include Validator
 
-  attr_accessor :list_employee
+  attr_accessor :list_driver
 
   def initialize
-    self.list_employee = ListEmployee.new('data.txt')
+    self.list_driver = ListDriver.new('storage.txt')
   end
 
   def show
-    puts list_employee.show
+    puts list_driver.show
   end
 
   def add
     begin
-      puts 'Введите данные работника:'
+      puts 'Введите данные водителя:'
 
       print 'ФИО: '
       fullname = STDIN.gets.chomp
-      unless Validator.is_fullname? fullname
+      until Validator.is_fullname? fullname
         puts "Некоректное ФИО!\nВведите заново: "
         fullname = STDIN.gets.chomp
       end
@@ -51,14 +51,6 @@ class TerminalViewListEmployee
       print 'Адрес: '
       address = STDIN.gets.chomp
 
-      print 'E-mail: '
-      email = STDIN.gets.chomp
-      until Validator.is_email? email
-        puts "Некоректный email!\nВведите заново: "
-        email = STDIN.gets.chomp
-      end
-      email = Validator.to_valid_email email
-
       print 'Паспорт: '
       passport = STDIN.gets.chomp
       until Validator.is_passport? passport
@@ -67,23 +59,17 @@ class TerminalViewListEmployee
       end
       passport = Validator.to_valid_passport passport
 
-      print 'Специальность: '
-      specialization = STDIN.gets.chomp
+      print 'Категория: '
+      category = STDIN.gets.chomp
 
-      print 'Стаж: '
-      workexp = STDIN.gets.chomp.to_i
+      print 'Стаж вождения: '
+      driverexp = STDIN.gets.chomp
 
-      print 'Название предыдущей работы: '
-      prevnamework = STDIN.gets.chomp
+      print 'Зарплата: '
+      salary = STDIN.gets.chomp.to_i
 
-      print 'Должность: '
-      post = STDIN.gets.chomp
-
-      print 'Предыдущая зарплата: '
-      prevsalary = STDIN.gets.chomp.to_i
-
-      emp = Employee.new(fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary)
-      list_employee.add emp
+      emp = Driver.new(fullname, birthdate, mobphone, address, passport, category, salary, driverexp)
+      list_driver.add emp
     rescue ArgumentError => e
       puts e.message
       puts 'Введите данные заново!'
@@ -97,7 +83,6 @@ class TerminalViewListEmployee
     puts '1. По ФИО'
     puts '2. По паспорту'
     puts '3. По номеру телефона'
-    puts '4. По email'
     print 'Выберите номер: '
     answer = STDIN.gets.chomp.to_i
     print 'Введите данные для поиска: '
@@ -105,60 +90,57 @@ class TerminalViewListEmployee
 
     case answer
     when 1
-      puts list_employee.find(:fullname, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:fullname, want_to_find)
+      puts list_driver.find(:fullname, want_to_find).nil? ? 'Такого водителя нет!' : list_driver.find(:fullname, want_to_find)
     when 2
-      puts list_employee.find(:passport, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:passport, want_to_find)
+      puts list_driver.find(:passport, want_to_find).nil? ? 'Такого водителя нет!' : list_driver.find(:passport, want_to_find)
     when 3
-      puts list_employee.find(:mobphone, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:mobphone, want_to_find)
-    when 4
-      puts list_employee.find(:email, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:email, want_to_find)
+      puts list_driver.find(:mobphone, want_to_find).nil? ? 'Такого водителя нет!' : list_driver.find(:mobphone, want_to_find)
     end
 
   end
 
   def change
-    puts 'Введите номер работника, данные которого вы хотите изменить.'
-    number = STDIN.gets.chomp.to_i
-    if (number > list_employee.length) || number.negative?
-      puts 'Такого работника нет!'
-      exit 0
-    end
-    employee = list_employee.get_emp(number)
+    puts 'Введите номер паспорта водителя, данные которого вы хотите изменить.'
+    want_to_change = STDIN.gets.chomp
 
+    driver = list_driver.find(:passport, want_to_change)
+    if driver.nil?
+      puts 'Такого водителя нет!'
+    end
     puts 'Выберите, какие данные вы хотите изменить (можно список)'
     puts '1. ФИО'
     puts '2. Дата рождения'
     puts '3. Номер телефона'
     puts '4. Адрес'
-    puts '5. Email'
-    puts '6. Паспорт'
-    puts '7. Специальность'
-    puts '8. Стаж работы'
-    puts '9. Предыдущее место работы'
-    puts '10. Должность'
-    puts '11. Зарплата'
-    array_changes = STDIN.gets.chomp.split.map(&:to_i)
-    fields = { 1 => :fullname, 2 => :birthdate, 3 => :mobphone, 4 => :address, 5 => :email, 6 => :passport,
-               7 => :specialization, 8 => :workexp, 9 => :prevnamework, 10 => :post, 11 => :prevsalary }
+    puts '5. Паспорт'
+    puts '6. Категория'
+    puts '7. Зарплата'
+    puts '8. Стаж вождения'
+    array_changes = STDIN.gets.chomp.split.map { |e| e.to_i }
+    fields = { 1 => :fullname, 2 => :birthdate, 3 => :mobphone, 4 => :address, 5 => :passport,
+               6 => :category, 7 => :salary, 8 => :driverexp }
     array_changes.each do |item|
-      puts "Изменяется поле под номером #{item} ..."
+      puts "Изменяется поле под номером: #{item}"
       print 'Введите новое значение: '
       change = STDIN.gets.chomp
-      list_employee.change(employee, fields[item], change)
+      list_driver.change(driver, fields[item], change)
     end
 
   end
 
   def delete
-    puts 'Введите номер работника, данные которого вы хотите удалить.'
-    number = STDIN.gets.chomp.to_i
-    puts 'Такого работника нет!' if (number > list_employee.length) || number.negative?
-    employee = list_employee.get_emp(number)
-    list_employee.delete(employee)
+    puts 'Введите номер паспорта водителя, данные которого вы хотите удалить из коллекции.'
+    want_to_delete = STDIN.gets.chomp
+
+    driver = list_driver.find(:passport, want_to_delete)
+    if driver.nil?
+      puts 'Такого водителя нет!'
+    end
+    list_driver.delete(driver)
   end
 
   def save
-    list_employee.write_list
+    list_driver.write_list
   end
 
   def close
@@ -171,22 +153,21 @@ class TerminalViewListEmployee
     puts '2. Дата рождения'
     puts '3. Номер телефона'
     puts '4. Адрес'
-    puts '5. Email'
-    puts '6. Паспорт'
-    puts '7. Специальность'
-    puts '8. Стаж работы'
-    puts '9. Предыдущее место работы'
-    puts '10. Должность'
-    puts '11. Зарплата'
+    puts '5. Паспорт'
+    puts '6. Категория'
+    puts '7. Зарплата'
+    puts '8. Стаж вождения'
+
     answer = STDIN.gets.chomp.to_i
 
-    fields = { 1 => :fullname, 2 => :birthdate, 3 => :mobphone, 4 => :address, 5 => :email, 6 => :passport,
-               7 => :specialization, 8 => :workexp, 9 => :prevnamework, 10 => :post, 11 => :prevsalary }
+    fields = { 1 => :fullname, 2 => :birthdate, 3 => :mobphone, 4 => :address, 5 => :passport,
+               6 => :category, 7 => :salary, 8 => :driverexp }
 
-    list_employee.sort(fields[answer])
+    list_driver.sort(fields[answer])
   end
 
   def start
+
     until 1 != 1
       puts "\nМеню".center(20)
       puts '1. Добавление нового пользователя'
@@ -220,8 +201,10 @@ class TerminalViewListEmployee
       end
     end
   end
+
 end
 
-test = TerminalViewListEmployee.new
+test = TerminalViewListDriver.new()
 
-test.start
+test.start()
+        

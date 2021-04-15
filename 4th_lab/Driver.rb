@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
-require 'date'
-require_relative 'Validator'
+require "date"
+require_relative "Validator"
 
 #######################################################################################################
 #                                                                                                     #
-#                                   Class Employee                                                    #
+#                                   Class Driver                                                    #
 #                                                                                                     #
 #######################################################################################################
 
-class Employee
+class Driver
 
   include Validator
 
@@ -52,14 +50,6 @@ class Employee
     @address = address
   end
 
-  def email
-    @email
-  end
-
-  def email=(email)
-    @email = Validator.to_valid_email email
-  end
-
   def passport
     @passport
   end
@@ -68,44 +58,28 @@ class Employee
     @passport = Validator.to_valid_passport passport
   end
 
-  def specialization
-    @specialization
+  def category
+    @category
   end
 
-  def specialization=(specialization)
-    @specialization = specialization
+  def category=(category)
+    @category = category
   end
 
-  def workexp
-    @workexp
+  def driverexp
+    @driverexp
   end
 
-  def workexp=(workexp)
-    @workexp = workexp.to_i.negative? ? 0 : workexp.to_i
+  def driverexp=(driverexp)
+    @driverexp = driverexp.to_i < 0 ? 0 : driverexp.to_i
   end
 
-  def prevnamework
-    @prevnamework
+  def salary
+    @salary
   end
 
-  def prevnamework=(prevnamework)
-    @prevnamework = @workexp.zero? ? 'NA' : prevnamework
-  end
-
-  def post
-    @post
-  end
-
-  def post=(post)
-    @post = @workexp.zero? ? 'NA' : post
-  end
-
-  def prevsalary
-    @prevsalary
-  end
-
-  def prevsalary=(prevsalary)
-    @prevsalary = @workexp.to_i.zero? ? 0 : prevsalary.to_i
+  def salary=(salary)
+    @salary = @driverexp > 3 ? salary * 1.2 : salary
   end
 
   #######################################################################################################
@@ -114,18 +88,15 @@ class Employee
   #                                                                                                     #
   #######################################################################################################
 
-  def initialize(fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
+  def initialize(fullname, birthdate, mobphone, address, passport, category, salary, driverexp = 0)
     self.fullname = fullname
     self.birthdate = birthdate
     self.mobphone = mobphone
     self.address = address
-    self.email = email
     self.passport = passport
-    self.specialization = specialization
-    self.workexp = workexp
-    self.prevnamework = prevnamework
-    self.post = post
-    self.prevsalary = prevsalary
+    self.category = category
+    self.driverexp = driverexp
+    self.salary = salary
   end
 
   #######################################################################################################
@@ -145,13 +116,10 @@ class Employee
       "#{birthdate}\n" +
       "#{mobphone}\n" +
       "#{address}\n" +
-      "#{email}\n" +
       "#{passport}\n" +
-      "#{specialization}\n" +
-      "#{workexp}\n" +
-      "#{prevnamework}\n" +
-      "#{post}\n" +
-      "#{prevsalary}\n\n"
+      "#{category}\n" +
+      "#{salary}\n" +
+      "#{driverexp}\n\n"
   end
 end
 
