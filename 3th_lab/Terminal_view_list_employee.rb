@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'ListEmployee'
+require_relative 'List_employee'
 require_relative 'Validator'
+require_relative 'testDB'
 
 ############################################################################################################
 #                                                                                                          #
@@ -13,9 +14,11 @@ class TerminalViewListEmployee
   include Validator
 
   attr_accessor :list_employee
+  attr_reader :connection
 
   def initialize
-    self.list_employee = ListEmployee.new('data.txt')
+    connection = Database.new
+    self.list_employee = ListEmployee.new(connection.conn)
   end
 
   def show
@@ -186,6 +189,10 @@ class TerminalViewListEmployee
                7 => :specialization, 8 => :workexp, 9 => :prevnamework, 10 => :post, 11 => :prevsalary }
 
     list_employee.sort(fields[answer])
+  end
+
+  def db_mysql_con
+    client = Mysql2::Client.new(host: '127.0.0.1', username: 'xonek', password: 'fylhjccb25', database: 'testDB')
   end
 
   def start

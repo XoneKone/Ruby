@@ -10,9 +10,9 @@ class ListEmployee
 
   attr_accessor :employee_list
 
-  def initialize(path)
+  def initialize(conn)
     self.employee_list = []
-    read_list path
+    read_list_DB(conn)
   end
 
   def read_list(path)
@@ -22,7 +22,14 @@ class ListEmployee
       employee = Employee.new(*fields)
       add employee
     end
+  end
 
+  def read_list_DB(conn)
+    conn.query('SELECT * FROM Employees').each do |r|
+      employee_list << Employee.new(r['EmployeeID'], r['fullname'], r['birthdate'].strftime('%d.%m.%Y'), r['mobphone'],
+                                    r['address'], r['email'], r['passport'], r['specialization'], r['workexp'],
+                                    r['prevnamework'], r['post'], r['prevsalary'])
+    end
   end
 
   def add(employee)
