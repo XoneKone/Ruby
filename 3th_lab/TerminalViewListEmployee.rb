@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'ListEmployee'
 require_relative 'Validator'
 
