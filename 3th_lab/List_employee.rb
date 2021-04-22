@@ -36,8 +36,23 @@ class ListEmployee
     employee_list.push(employee)
   end
 
+  def add_to_DB(conn, data)
+    escaped = data.map do |value|
+      conn.escape(value).to_s
+    end
+    conn.query("INSERT INTO Employees VALUES (#{escaped.join(",")})")
+  end
+
   def change(employee, what_change, change)
     employee.send("#{what_change}=", change)
+  end
+
+  def change_node(conn, id, what_change, change)
+    node = conn.query("SELECT * FROM Employees WHERE Employees.id = #{id}")
+    employee = Employee.new(node['EmployeeID'], node['fullname'], node['birthdate'].strftime('%d.%m.%Y'), node['mobphone'],
+                            node['address'], node['email'], node['passport'], node['specialization'], node['workexp'],
+                            node['prevnamework'], node['post'], node['prevsalary'])
+    
   end
 
   def delete(employee)

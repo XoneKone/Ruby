@@ -14,11 +14,11 @@ class TerminalViewListEmployee
   include Validator
 
   attr_accessor :list_employee
-  attr_reader :connection
+  attr_reader :db
 
   def initialize
-    connection = Database.new
-    self.list_employee = ListEmployee.new(connection.conn)
+    db = Database.new
+    self.list_employee = ListEmployee.new(db.conn)
   end
 
   def show
