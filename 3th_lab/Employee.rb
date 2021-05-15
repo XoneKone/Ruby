@@ -137,6 +137,10 @@ class Employee
     self.prevsalary = prevsalary
   end
 
+  def get_list
+    [id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
+  end
+
   #######################################################################################################
   #                                                                                                     #
   #                                           Validation                                                #

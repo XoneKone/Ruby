@@ -1,5 +1,5 @@
 require_relative 'Employee'
-
+require_relative 'testDB'
 ############################################################################################################
 #                                                                                                          #
 #                                       Class ListEmployee                                                 #
@@ -10,9 +10,8 @@ class ListEmployee
 
   attr_accessor :employee_list
 
-  def initialize(conn)
-    self.employee_list = []
-    read_list_DB(conn)
+  def initialize
+    self.employee_list = read_list_DB
   end
 
   def read_list(path)
@@ -24,39 +23,35 @@ class ListEmployee
     end
   end
 
-  def read_list_DB(conn)
-    conn.query('SELECT * FROM Employees').each do |r|
-      employee_list << Employee.new(r['EmployeeID'], r['fullname'], r['birthdate'].strftime('%d.%m.%Y'), r['mobphone'],
-                                    r['address'], r['email'], r['passport'], r['specialization'], r['workexp'],
-                                    r['prevnamework'], r['post'], r['prevsalary'])
-    end
+  def read_list_DB()
+    Database.instance.select_all
   end
 
   def add(employee)
     employee_list.push(employee)
   end
 
-  def add_to_DB(conn, data)
-    escaped = data.map do |value|
-      conn.escape(value).to_s
-    end
-    conn.query("INSERT INTO Employees VALUES (#{escaped.join(",")})")
+  def add_to_DB(data)
+    add(Employee.new(*data))
+    Database.instance.add_node(data)
   end
 
   def change(employee, what_change, change)
     employee.send("#{what_change}=", change)
   end
 
-  def change_node(conn, id, what_change, change)
-    node = conn.query("SELECT * FROM Employees WHERE Employees.id = #{id}")
-    employee = Employee.new(node['EmployeeID'], node['fullname'], node['birthdate'].strftime('%d.%m.%Y'), node['mobphone'],
-                            node['address'], node['email'], node['passport'], node['specialization'], node['workexp'],
-                            node['prevnamework'], node['post'], node['prevsalary'])
-    
+  def change_node(id, what_change, change)
+    change(find(:EmployeeID, id), what_change, change)
+    Database.instance.change_node(id, what_change, change)
   end
 
   def delete(employee)
     employee_list.delete(employee)
+  end
+
+  def delete_from_db(id)
+    delete(find(:EmployeeID, id))
+    Database.instance.delete_node(id)
   end
 
   def write_list
@@ -78,9 +73,8 @@ class ListEmployee
 
   def show
     data = ''
-    ind = 1
     employee_list.each do |emp|
-      data += "Работник №#{ind}\n" \
+      data += "Работник №#{emp.id}\n" \
               "ФИО: #{emp.fullname}\n" \
               "Дата рождения: #{emp.birthdate}\n" \
               "Номер телефона: #{emp.mobphone}\n" \
@@ -92,7 +86,6 @@ class ListEmployee
               "Предыдущее место работы: #{emp.prevnamework}\n" \
               "Должность: #{emp.post}\n" \
               "Предыдущая зарплата: #{emp.prevsalary}\n\n"
-      ind += 1
     end
     data
   end
@@ -114,3 +107,5 @@ class ListEmployee
   end
 
 end
+
+
