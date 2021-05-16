@@ -123,7 +123,7 @@ class Employee
   #######################################################################################################
 
   def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
-    self.id = id
+    self.id = id.to_i
     self.fullname = fullname
     self.birthdate = birthdate
     self.mobphone = mobphone
@@ -140,12 +140,6 @@ class Employee
   def get_list
     [id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
   end
-
-  #######################################################################################################
-  #                                                                                                     #
-  #                                           Validation                                                #
-  #                                                                                                     #
-  #######################################################################################################
 
   #######################################################################################################
   #                                                                                                     #

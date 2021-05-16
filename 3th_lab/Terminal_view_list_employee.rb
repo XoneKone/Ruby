@@ -74,7 +74,7 @@ class TerminalViewListEmployee
     specialization = STDIN.gets.chomp
 
     print 'Стаж: '
-    workexp = STDIN.gets.chomp.to_i
+    workexp = STDIN.gets.chomp
 
     print 'Название предыдущей работы: '
     prevnamework = STDIN.gets.chomp
@@ -83,9 +83,8 @@ class TerminalViewListEmployee
     post = STDIN.gets.chomp
 
     print 'Предыдущая зарплата: '
-    prevsalary = STDIN.gets.chomp.to_i
+    prevsalary = STDIN.gets.chomp
 
-    emp = Employee.new(fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary)
     list_employee.add_to_DB([fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary])
   end
 
@@ -116,11 +115,10 @@ class TerminalViewListEmployee
   def change
     puts 'Введите номер работника, данные которого вы хотите изменить.'
     number = STDIN.gets.chomp.to_i
-    if (number > list_employee.length) || number.negative?
+    unless list_employee.find(:id, number)
       puts 'Такого работника нет!'
       exit 0
     end
-    employee = list_employee.get_emp(number)
 
     puts 'Выберите, какие данные вы хотите изменить (можно список)'
     puts '1. ФИО'
@@ -141,7 +139,7 @@ class TerminalViewListEmployee
       puts "Изменяется поле под номером #{item} ..."
       print 'Введите новое значение: '
       change = STDIN.gets.chomp
-      list_employee.change_node(number.to_s, fields[item].to_s, change)
+      list_employee.change_node(number, fields[item].to_s, change)
     end
 
   end
@@ -149,7 +147,7 @@ class TerminalViewListEmployee
   def delete
     puts 'Введите номер работника, данные которого вы хотите удалить.'
     number = STDIN.gets.chomp.to_i
-    puts 'Такого работника нет!' if (number > list_employee.length) || number.negative?
+    puts 'Такого работника нет!' unless list_employee.find(:id, number)
     list_employee.delete_from_db(number)
   end
 

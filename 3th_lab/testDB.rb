@@ -41,7 +41,7 @@ workexp, prevnamework, post, prevsalary) VALUES (#{escaped.join(',')});")
   end
 
   def change_node(id, what_change, change)
-    conn.query("UPDATE Employees SET #{conn.escape(what_change)} = #{conn.escape(change)} WHERE EmployeeID = #{id}")
+    conn.query("UPDATE Employees SET #{conn.escape(what_change)} = '#{conn.escape(change)}' WHERE EmployeeID = #{id}")
   end
 
   def delete_node(id)
@@ -52,19 +52,3 @@ workexp, prevnamework, post, prevsalary) VALUES (#{escaped.join(',')});")
     conn.close
   end
 end
-
-a = Database.instance
-p a.select_all
-a.add_node(['Горин Геннадий Геннадьевич',
-            '05.05.1987',
-            '8-905-9823214',
-            'ул. Северная, д. 35',
-            'gena@mail.ru',
-            '02 01 846975',
-            'Программист',
-            '5',
-            'Магнит',
-            'Senior-программист',
-            '150000'])
-
-p   a.select_all
