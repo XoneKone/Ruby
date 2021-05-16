@@ -11,7 +11,7 @@ class ListEmployee
   attr_accessor :employee_list
 
   def initialize
-    self.employee_list = read_list_DB
+    self.employee_list = []
   end
 
   # reading data from a file.txt
@@ -26,7 +26,7 @@ class ListEmployee
 
   # reading data from a database
   def read_list_DB
-    Database.instance.select_all
+    @employee_list = Database.instance.select_all
   end
 
   # adding an employee to the list
@@ -212,6 +212,7 @@ class ListEmployee
     nil
   end
 
+  # @todo: implement task 13
   # showing all employees
   def show
     data = ''
@@ -232,7 +233,7 @@ class ListEmployee
     data
   end
 
-  #sort by a given key
+  # sort by a given key
   def sort(key)
     employee_list.sort_by! { |emp| emp.send(key) }
   end

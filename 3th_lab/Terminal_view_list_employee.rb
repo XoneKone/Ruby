@@ -3,6 +3,7 @@
 require_relative 'List_employee'
 require_relative 'Validator'
 require_relative 'testDB'
+require 'mysql2'
 
 ############################################################################################################
 #                                                                                                          #
@@ -15,6 +16,21 @@ class TerminalViewListEmployee
   include Validator
 
   attr_accessor :list_employee
+
+  def error_handler(message)
+    puts message
+    puts '1. Завершить работу'
+    puts '2. Прочитать данные из сериализованного файла'
+    answer = STDIN.gets.chomp
+    case answer
+    when '1'
+      exit 0
+    when '2'
+      list_employee.read_list_YAML
+      puts 'Чтение данных завершенно!'
+    end
+
+  end
 
   def initialize
     self.list_employee = ListEmployee.new
@@ -157,6 +173,7 @@ class TerminalViewListEmployee
 
   def close
     Database.instance.close
+    list_employee.write_list_YAML
     exit 0
   end
 
@@ -182,6 +199,12 @@ class TerminalViewListEmployee
   end
 
   def start
+    begin
+      list_employee.read_list_DB
+    rescue Mysql2::Error => e
+      error_handler e.message
+    end
+
     until 1 != 1
       puts "\nМеню".center(20)
       puts '1. Добавление нового пользователя'
@@ -212,6 +235,8 @@ class TerminalViewListEmployee
         sort
       when '8'
         close
+      else
+        puts '\nНет такого номера!\n'
       end
     end
   end
