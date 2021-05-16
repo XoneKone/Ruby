@@ -1,5 +1,9 @@
-require_relative 'ListEmployee'
+# frozen_string_literal: true
+
+require_relative 'List_employee'
 require_relative 'Validator'
+require_relative 'testDB'
+require 'mysql2'
 
 ############################################################################################################
 #                                                                                                          #
@@ -7,13 +11,29 @@ require_relative 'Validator'
 #                                                                                                          #
 ############################################################################################################
 
+# View
 class TerminalViewListEmployee
   include Validator
 
   attr_accessor :list_employee
 
+  def error_handler(message)
+    puts message
+    puts '1. Завершить работу'
+    puts '2. Прочитать данные из сериализованного файла'
+    answer = STDIN.gets.chomp
+    case answer
+    when '1'
+      exit 0
+    when '2'
+      list_employee.read_list_YAML
+      puts 'Чтение данных завершенно!'
+    end
+
+  end
+
   def initialize
-    self.list_employee = ListEmployee.new('data.txt')
+    self.list_employee = ListEmployee.new
   end
 
   def show
@@ -21,75 +41,67 @@ class TerminalViewListEmployee
   end
 
   def add
-    begin
-      puts 'Введите данные работника:'
+    puts 'Введите данные работника:'
 
-      print 'ФИО: '
+    print 'ФИО: '
+    fullname = STDIN.gets.chomp
+    unless Validator.is_fullname? fullname
+      puts "Некоректное ФИО!\nВведите заново: "
       fullname = STDIN.gets.chomp
-      unless Validator.is_fullname? fullname
-        puts "Некоректное ФИО!\nВведите заново: "
-        fullname = STDIN.gets.chomp
-      end
-      fullname = Validator.to_valid_fullname fullname
-
-      print 'Дата рождения: '
-      birthdate = STDIN.gets.chomp
-      until Validator.is_birthdate? birthdate
-        puts "Некоректная дата рождения!\nВведите заново: "
-        birthdate = STDIN.gets.chomp
-      end
-      birthdate = Validator.to_valid_birthdate birthdate
-
-      print 'Номер телефона: '
-      mobphone = STDIN.gets.chomp
-      until Validator.is_russian_mobphone? mobphone
-        puts "Некоректный моб. телефон!\nВведите заново: "
-        mobphone = STDIN.gets.chomp
-      end
-      mobphone = Validator.to_valid_mobphone mobphone
-
-      print 'Адрес: '
-      address = STDIN.gets.chomp
-
-      print 'E-mail: '
-      email = STDIN.gets.chomp
-      until Validator.is_email? email
-        puts "Некоректный email!\nВведите заново: "
-        email = STDIN.gets.chomp
-      end
-      email = Validator.to_valid_email email
-
-      print 'Паспорт: '
-      passport = STDIN.gets.chomp
-      until Validator.is_passport? passport
-        puts "Некоректный паспорт!\nВведите заново: "
-        passport = STDIN.gets.chomp
-      end
-      passport = Validator.to_valid_passport passport
-
-      print 'Специальность: '
-      specialization = STDIN.gets.chomp
-
-      print 'Стаж: '
-      workexp = STDIN.gets.chomp.to_i
-
-      print 'Название предыдущей работы: '
-      prevnamework = STDIN.gets.chomp
-
-      print 'Должность: '
-      post = STDIN.gets.chomp
-
-      print 'Предыдущая зарплата: '
-      prevsalary = STDIN.gets.chomp.to_i
-
-      emp = Employee.new(fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary)
-      list_employee.add emp
-    rescue ArgumentError => e
-      puts e.message
-      puts 'Введите данные заново!'
-      add
     end
+    fullname = Validator.to_valid_fullname fullname
 
+    print 'Дата рождения: '
+    birthdate = STDIN.gets.chomp
+    until Validator.is_birthdate? birthdate
+      puts "Некоректная дата рождения!\nВведите заново: "
+      birthdate = STDIN.gets.chomp
+    end
+    birthdate = Validator.to_valid_birthdate birthdate
+
+    print 'Номер телефона: '
+    mobphone = STDIN.gets.chomp
+    until Validator.is_russian_mobphone? mobphone
+      puts "Некоректный моб. телефон!\nВведите заново: "
+      mobphone = STDIN.gets.chomp
+    end
+    mobphone = Validator.to_valid_mobphone mobphone
+
+    print 'Адрес: '
+    address = STDIN.gets.chomp
+
+    print 'E-mail: '
+    email = STDIN.gets.chomp
+    until Validator.is_email? email
+      puts "Некоректный email!\nВведите заново: "
+      email = STDIN.gets.chomp
+    end
+    email = Validator.to_valid_email email
+
+    print 'Паспорт: '
+    passport = STDIN.gets.chomp
+    until Validator.is_passport? passport
+      puts "Некоректный паспорт!\nВведите заново: "
+      passport = STDIN.gets.chomp
+    end
+    passport = Validator.to_valid_passport passport
+
+    print 'Специальность: '
+    specialization = STDIN.gets.chomp
+
+    print 'Стаж: '
+    workexp = STDIN.gets.chomp
+
+    print 'Название предыдущей работы: '
+    prevnamework = STDIN.gets.chomp
+
+    print 'Должность: '
+    post = STDIN.gets.chomp
+
+    print 'Предыдущая зарплата: '
+    prevsalary = STDIN.gets.chomp
+
+    list_employee.add_to_DB([fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary])
   end
 
   def find
@@ -105,13 +117,13 @@ class TerminalViewListEmployee
 
     case answer
     when 1
-      puts list_employee.find(:fullname, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:fullname, want_to_find)
+      puts list_employee.find(:fullname, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:fullname, want_to_find)
     when 2
-      puts list_employee.find(:passport, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:passport, want_to_find)
+      puts list_employee.find(:passport, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:passport, want_to_find)
     when 3
-      puts list_employee.find(:mobphone, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:mobphone, want_to_find)
+      puts list_employee.find(:mobphone, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:mobphone, want_to_find)
     when 4
-      puts list_employee.find(:email, want_to_find).nil? ? 'Такого водителя нет!' : list_employee.find(:email, want_to_find)
+      puts list_employee.find(:email, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:email, want_to_find)
     end
 
   end
@@ -119,11 +131,10 @@ class TerminalViewListEmployee
   def change
     puts 'Введите номер работника, данные которого вы хотите изменить.'
     number = STDIN.gets.chomp.to_i
-    if (number > list_employee.length) || number.negative?
+    unless list_employee.find(:id, number)
       puts 'Такого работника нет!'
       exit 0
     end
-    employee = list_employee.get_emp(number)
 
     puts 'Выберите, какие данные вы хотите изменить (можно список)'
     puts '1. ФИО'
@@ -144,7 +155,7 @@ class TerminalViewListEmployee
       puts "Изменяется поле под номером #{item} ..."
       print 'Введите новое значение: '
       change = STDIN.gets.chomp
-      list_employee.change(employee, fields[item], change)
+      list_employee.change_node(number, fields[item].to_s, change)
     end
 
   end
@@ -152,9 +163,8 @@ class TerminalViewListEmployee
   def delete
     puts 'Введите номер работника, данные которого вы хотите удалить.'
     number = STDIN.gets.chomp.to_i
-    puts 'Такого работника нет!' if (number > list_employee.length) || number.negative?
-    employee = list_employee.get_emp(number)
-    list_employee.delete(employee)
+    puts 'Такого работника нет!' unless list_employee.find(:id, number)
+    list_employee.delete_from_db(number)
   end
 
   def save
@@ -162,6 +172,8 @@ class TerminalViewListEmployee
   end
 
   def close
+    Database.instance.close
+    list_employee.write_list_YAML
     exit 0
   end
 
@@ -187,6 +199,12 @@ class TerminalViewListEmployee
   end
 
   def start
+    begin
+      list_employee.read_list_DB
+    rescue Mysql2::Error => e
+      error_handler e.message
+    end
+
     until 1 != 1
       puts "\nМеню".center(20)
       puts '1. Добавление нового пользователя'
@@ -217,6 +235,8 @@ class TerminalViewListEmployee
         sort
       when '8'
         close
+      else
+        puts '\nНет такого номера!\n'
       end
     end
   end

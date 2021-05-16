@@ -19,6 +19,14 @@ class Employee
   #                                   Setters                                                           #
   #                                                                                                     #
   #######################################################################################################
+  def id
+    @id
+  end
+
+  def id=(id)
+    @id = id
+  end
+
   def fullname
     @fullname
   end
@@ -114,7 +122,8 @@ class Employee
   #                                                                                                     #
   #######################################################################################################
 
-  def initialize(fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
+  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
+    self.id = id.to_i
     self.fullname = fullname
     self.birthdate = birthdate
     self.mobphone = mobphone
@@ -128,11 +137,9 @@ class Employee
     self.prevsalary = prevsalary
   end
 
-  #######################################################################################################
-  #                                                                                                     #
-  #                                           Validation                                                #
-  #                                                                                                     #
-  #######################################################################################################
+  def get_list
+    [id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
+  end
 
   #######################################################################################################
   #                                                                                                     #
@@ -154,5 +161,7 @@ class Employee
       "#{prevsalary}\n\n"
   end
 end
+
+
 
 

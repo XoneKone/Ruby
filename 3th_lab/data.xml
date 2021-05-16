@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Employees>
+  <employee>
+    <id>1</id>
+    <fullname>Хван Константин Леонидович</fullname>
+    <birthdate>13.10.2000</birthdate>
+    <mobphone>8-918-213213</mobphone>
+    <address>ул. Пушкина, д. Колотушкина</address>
+    <email>kostya@mail.ru</email>
+    <passport>03 23 413212</passport>
+    <specialization>Программист</specialization>
+    <workexp>2</workexp>
+    <prevnamework>Спортмастер</prevnamework>
+    <post>Junior</post>
+    <prevsalary>50000</prevsalary>
+  </employee>
+  <employee>
+    <id>2</id>
+    <fullname>Иванов Иван Иванович</fullname>
+    <birthdate>10.12.1998</birthdate>
+    <mobphone>8-912-2128533</mobphone>
+    <address>ул. Красная, д. Колотушкина</address>
+    <email>ivan@mail.ru</email>
+    <passport>03 13 473118</passport>
+    <specialization>Инженер</specialization>
+    <workexp>5</workexp>
+    <prevnamework>Газ-Пром</prevnamework>
+    <post>Старший инженер</post>
+    <prevsalary>100000</prevsalary>
+  </employee>
+  <employee>
+    <id>11</id>
+    <fullname>Горин Геннадий Геннадьевич</fullname>
+    <birthdate>05.05.1987</birthdate>
+    <mobphone>8-905-9823214</mobphone>
+    <address>ул. Северная, д. 35</address>
+    <email>gena@mail.ru</email>
+    <passport>02 01 846975</passport>
+    <specialization>Программист</specialization>
+    <workexp>5</workexp>
+    <prevnamework>Магнит</prevnamework>
+    <post>Senior-программист</post>
+    <prevsalary>150000</prevsalary>
+  </employee>
+  <employee>
+    <id>14</id>
+    <fullname>Сидоров Петр Иванович</fullname>
+    <birthdate>23.11.1988</birthdate>
+    <mobphone>8-928-3456789</mobphone>
+    <address>ул. Победы, кв. 133</address>
+    <email>petro@mail.ru</email>
+    <passport>02 94 867584</passport>
+    <specialization>Маркетолог</specialization>
+    <workexp>3</workexp>
+    <prevnamework>Sberbank</prevnamework>
+    <post>Начальник отдела</post>
+    <prevsalary>80000</prevsalary>
+  </employee>
+</Employees>
