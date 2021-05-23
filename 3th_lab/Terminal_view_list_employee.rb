@@ -2,7 +2,7 @@
 
 require_relative 'List_employee'
 require_relative 'Validator'
-require_relative 'testDB'
+require_relative 'DBwork'
 require 'mysql2'
 
 ############################################################################################################
@@ -17,20 +17,7 @@ class TerminalViewListEmployee
 
   attr_accessor :list_employee
 
-  def error_handler(message)
-    puts message
-    puts '1. Завершить работу'
-    puts '2. Прочитать данные из сериализованного файла'
-    answer = STDIN.gets.chomp
-    case answer
-    when '1'
-      exit 0
-    when '2'
-      list_employee.read_list_YAML
-      puts 'Чтение данных завершенно!'
-    end
 
-  end
 
   def initialize
     self.list_employee = ListEmployee.new
@@ -196,6 +183,21 @@ class TerminalViewListEmployee
                7 => :specialization, 8 => :workexp, 9 => :prevnamework, 10 => :post, 11 => :prevsalary }
 
     list_employee.sort(fields[answer])
+  end
+
+  def error_handler(message)
+    puts message
+    puts '1. Завершить работу'
+    puts '2. Прочитать данные из сериализованного файла'
+    answer = STDIN.gets.chomp
+    case answer
+    when '1'
+      exit 0
+    when '2'
+      list_employee.read_list_YAML
+      puts 'Чтение данных завершенно!'
+    end
+
   end
 
   def start

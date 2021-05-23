@@ -1,5 +1,5 @@
 require_relative 'Employee'
-require_relative 'testDB'
+require_relative 'DBwork'
 require 'yaml'
 require 'json'
 require 'rexml/document'

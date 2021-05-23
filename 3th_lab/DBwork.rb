@@ -13,14 +13,17 @@ class Database
     self.conn = db_mysql_con
   end
 
+  # @return Database instance
   def self.instance
     @@instance ||= new
   end
 
+  # @return connection
   def db_mysql_con
     Mysql2::Client.new(host: '127.0.0.1', username: 'xonek', password: 'fylhjccb25', database: 'testDB')
   end
 
+  # @return List[Employee]
   def select_all
     res = []
     conn.query('SELECT * FROM Employees').each do |r|
@@ -48,6 +51,7 @@ workexp, prevnamework, post, prevsalary) VALUES (#{escaped.join(',')});")
     conn.query("DELETE FROM Employees WHERE EmployeeID = #{id}")
   end
 
+  # closing the connection
   def close
     conn.close
   end
