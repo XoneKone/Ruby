@@ -1,13 +1,25 @@
 # frozen_string_literal: true
 
 # Base salary
-class Base
+class Salary
   def get_salary
     raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end
 end
 
-class BaseSalary < Base
+class Decorator < Salary
+  attr_accessor :salary
+
+  def initialize(salary)
+    @salary = salary
+  end
+
+  def get_salary
+    @salary.get_salary
+  end
+end
+
+class FixedSalary < Salary
   attr_accessor :fixed_salary
 
   def initialize(fixed_salary)
@@ -19,63 +31,47 @@ class BaseSalary < Base
   end
 end
 
-class PremiumSalary < BaseSalary
-  attr_accessor :premium, :base_salary
+class PremiumSalary < Decorator
+  attr_accessor :premium
 
-  def initialize(base_salary, premium)
-    @base_salary = base_salary
+  def initialize(salary, premium)
+    super(salary)
     @premium = premium
   end
 
   def get_salary
-    @base_salary.get_salary + @premium
+    @salary.get_salary + @premium
   end
 end
 
-class PercentSalary < BaseSalary
-  attr_accessor :percent, :base_salary
+class QuartAwardSalary < Decorator
+  attr_accessor :percent
 
-  def initialize(base_salary, percent)
-    @base_salary = base_salary
+  def initialize(salary, percent)
+    super(salary)
     @percent = percent
   end
 
   def get_salary
-    @base_salary.get_salary * (@percent + 100) / 100
+    if [3, 6, 9, 12].include? Time.now
+      @salary.get_salary * (@percent + 100) / 100
+    else
+      @salary.get_salary
+    end
   end
 end
 
-class Salary
-  attr_accessor :base_salary, :fixed_premium_bool, :fixed_premium_size,
-                :quarterly_award_bool, :quarterly_award_size, :possible_bonus_bool, :possible_bonus_percent
+class BonusSalary <Decorator
+  attr_accessor :percent
 
-  def initialize(fixed_salary, fixed_premium_bool, fixed_premium_size,
-                 quarterly_award_bool, quarterly_award_size, possible_bonus_bool, possible_bonus_percent)
-    @base_salary = BaseSalary.new(fixed_salary)
-    @fixed_premium_bool = fixed_premium_bool
-    @fixed_premium_size = fixed_premium_size
-    @quarterly_award_bool = quarterly_award_bool
-    @quarterly_award_size = quarterly_award_size
-    @possible_bonus_bool = possible_bonus_bool
-    @possible_bonus_percent = possible_bonus_percent
+  def initialize(salary, percent)
+    super(salary)
+    @percent = percent
   end
 
   def get_salary
-    @base_salary.get_salary
+    @salary.get_salary * (@percent + 100) / 100
   end
-
-  def get_simple
-    @base_salary = BaseSalary.new(0)
-    @base_salary.get_salary
-  end
-
-  def get_premium_and_award
-    @base_salary = PremiumSalary.new(@base_salary, @fixed_premium_size) unless @fixed_premium_bool.nil?
-    @base_salary = PercentSalary.new(@base_salary, @quarterly_award_size) unless @quarterly_award_bool.nil?
-    @base_salary.get_salary
-
-  end
-
 end
 
 

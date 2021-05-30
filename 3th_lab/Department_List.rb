@@ -1,9 +1,10 @@
+require_relative 'DBwork'
+
 class DepartmentList
-  attr_accessor :departments, :department_list
+  attr_accessor :department_list
 
   def initialize
-    @department_list = departments
-
+    @department_list = read_DB
   end
 
   def add(department)
@@ -14,4 +15,12 @@ class DepartmentList
     @department_list[int - 1]
   end
 
+  def read_DB
+    Database.instance.read_DB_dep_list
+  end
+
 end
+
+
+d = DepartmentList.new
+d.department_list.each { |m| p m}

@@ -26,7 +26,7 @@ class ListEmployee
 
   # reading data from a database
   def read_list_DB
-    @employee_list = Database.instance.select_all
+    @employee_list = Database.instance.read_DB_emp_list
   end
 
   # adding an employee to the list
@@ -200,7 +200,7 @@ class ListEmployee
   end
 
   def read_list_JSON
-    file = YAML.load_file('data.json')
+    file = JSON.load_file('data.json')
     @employee_list = file
   end
 

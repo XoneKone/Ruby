@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'List_employee'
+require_relative 'Employee_list'
 require_relative 'Validator'
 require_relative 'DBwork'
 require 'mysql2'
