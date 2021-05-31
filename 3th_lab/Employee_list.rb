@@ -212,7 +212,6 @@ class ListEmployee
     nil
   end
 
-  # @todo: implement task 13
   # showing all employees
   def show
     data = ''

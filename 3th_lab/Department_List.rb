@@ -22,5 +22,4 @@ class DepartmentList
 end
 
 
-d = DepartmentList.new
-d.department_list.each { |m| p m}
+

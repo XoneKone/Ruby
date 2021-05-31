@@ -4,7 +4,13 @@ class PostList
   attr_accessor :department, :post_list
   attr_writer :strategy
 
-  def department=(department_id)
+  def department=(department)
+    @post_list.each do |post|
+      post.dep
+    end
+  end
+
+  def create_dep(department_id)
     @department = if department_id.nil?
                     nil
                   else
@@ -28,6 +34,7 @@ class PostList
 
   def read_DB
     @strategy.read_DB_post_list(department)
+
   end
 end
 
@@ -43,6 +50,7 @@ class WithDepStrategy < Strategy
   end
 end
 
+#argument null
 class WithOutDepStrategy < Strategy
   def read_DB_post_list(_dep)
     Database.instance.read_DB_post_list_without_deb

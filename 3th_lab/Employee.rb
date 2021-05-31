@@ -122,7 +122,7 @@ class Employee
   #                                                                                                     #
   #######################################################################################################
 
-  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
+  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = nil, prevsalary = 0)
     self.id = id.to_i
     self.fullname = fullname
     self.birthdate = birthdate

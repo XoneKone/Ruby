@@ -57,6 +57,7 @@ class Database
     res
   end
 
+  #todo: Union those methods
   def read_DB_post_list_without_deb
     res = []
     conn.query('SELECT * FROM Posts WHERE EmployeeID = NULL').each do |r|
@@ -66,7 +67,7 @@ class Database
     end
     res
   end
-
+  # this one
   def read_DB_dep_list
     res = []
     conn.query('SELECT * FROM Departments').each do |r|
