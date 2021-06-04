@@ -20,7 +20,7 @@ class TerminalViewListEmployee
 
 
   def initialize
-    self.list_employee = ListEmployee.new
+    self.list_employee = EmployeeList.new
   end
 
   def show
@@ -88,7 +88,8 @@ class TerminalViewListEmployee
     print 'Предыдущая зарплата: '
     prevsalary = STDIN.gets.chomp
 
-    list_employee.add_to_DB([fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary])
+    list_employee.add_to_DB([fullname, birthdate, mobphone, address, email, passport, specialization, workexp,
+                             prevnamework, post, prevsalary])
   end
 
   def find
@@ -104,13 +105,17 @@ class TerminalViewListEmployee
 
     case answer
     when 1
-      puts list_employee.find(:fullname, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:fullname, want_to_find)
+      puts list_employee.find(:fullname, 
+want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:fullname, want_to_find)
     when 2
-      puts list_employee.find(:passport, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:passport, want_to_find)
+      puts list_employee.find(:passport, 
+want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:passport, want_to_find)
     when 3
-      puts list_employee.find(:mobphone, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:mobphone, want_to_find)
+      puts list_employee.find(:mobphone, 
+want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:mobphone, want_to_find)
     when 4
-      puts list_employee.find(:email, want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:email, want_to_find)
+      puts list_employee.find(:email, 
+want_to_find).nil? ? 'Такого работника нет!' : list_employee.find(:email, want_to_find)
     end
 
   end

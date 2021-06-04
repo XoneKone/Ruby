@@ -6,7 +6,7 @@ require 'rexml/document'
 require 'builder'
 
 # Class for storing a list of employees
-class ListEmployee
+class EmployeeList
 
   attr_accessor :employee_list
 
@@ -37,7 +37,7 @@ class ListEmployee
   # adding an employee to the list and to the database
   def add_to_DB(data)
     add(Employee.new(get_last_id + 1, *data))
-    Database.instance.add_node(data)
+    Database.instance.add_node({ 'data' => data, 'table': 'Employees' })
   end
 
   # changing an employee in the list
@@ -48,7 +48,8 @@ class ListEmployee
   # changing an employee in the list and in the database
   def change_node(id, what_change, change)
     change(find(:id, id), what_change, change)
-    Database.instance.change_node(id, what_change, change)
+    h = { 'table' => 'Employees', 'what_change' => what_change, 'change' => change, 'field' => 'EmployeeID', 'id' => id }
+    Database.instance.change_node(h)
   end
 
   # deleting an employee from the list
@@ -59,7 +60,7 @@ class ListEmployee
   # deleting an employee from the list and from the database
   def delete_from_db(id)
     delete(find(:id, id))
-    Database.instance.delete_node(id)
+    Database.instance.delete_node({ 'table' => 'Employees', 'field' => 'EmployeeID', 'id' => id })
   end
 
   # writing data to the data.txt

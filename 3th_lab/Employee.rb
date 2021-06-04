@@ -19,24 +19,12 @@ class Employee
   #                                   Setters                                                           #
   #                                                                                                     #
   #######################################################################################################
-  def id
-    @id
-  end
+  attr_accessor :id, :address, :specialization, :post
 
-  def id=(id)
-    @id = id
-  end
-
-  def fullname
-    @fullname
-  end
+  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :specialization, :workexp, :prevnamework, :post, :prevsalary
 
   def fullname=(fullname)
     @fullname = Validator.to_valid_fullname fullname
-  end
-
-  def birthdate
-    @birthdate
   end
 
   def birthdate=(birthdate)
@@ -44,72 +32,24 @@ class Employee
 
   end
 
-  def mobphone
-    @mobphone
-  end
-
   def mobphone=(mobphone)
     @mobphone = Validator.to_valid_mobphone mobphone
-  end
-
-  def address
-    @address
-  end
-
-  def address=(address)
-    @address = address
-  end
-
-  def email
-    @email
   end
 
   def email=(email)
     @email = Validator.to_valid_email email
   end
 
-  def passport
-    @passport
-  end
-
   def passport=(passport)
     @passport = Validator.to_valid_passport passport
-  end
-
-  def specialization
-    @specialization
-  end
-
-  def specialization=(specialization)
-    @specialization = specialization
-  end
-
-  def workexp
-    @workexp
   end
 
   def workexp=(workexp)
     @workexp = workexp.to_i.negative? ? 0 : workexp.to_i
   end
 
-  def prevnamework
-    @prevnamework
-  end
-
   def prevnamework=(prevnamework)
     @prevnamework = @workexp.zero? ? 'NA' : prevnamework
-  end
-
-  def post
-    @post
-  end
-
-  def post=(post)
-    @post = @workexp.zero? ? 'NA' : post
-  end
-
-  def prevsalary
-    @prevsalary
   end
 
   def prevsalary=(prevsalary)
@@ -137,8 +77,8 @@ class Employee
     self.prevsalary = prevsalary
   end
 
-  def get_list
-    [id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
+  def data
+    [fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
   end
 
   #######################################################################################################
