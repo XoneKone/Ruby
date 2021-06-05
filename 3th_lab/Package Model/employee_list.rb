@@ -1,4 +1,4 @@
-require_relative 'Employee'
+require_relative 'employee'
 require_relative 'DBwork'
 require 'yaml'
 require 'json'

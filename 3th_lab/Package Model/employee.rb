@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require_relative 'Validator'
+require_relative 'validator'
 
 #######################################################################################################
 #                                                                                                     #

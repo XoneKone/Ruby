@@ -1,8 +1,8 @@
 require 'mysql2'
-require_relative 'Employee'
-require_relative 'Department'
-require_relative 'Post'
-require_relative 'Post_List'
+require_relative 'employee'
+require_relative 'department'
+require_relative 'post'
+require_relative 'post_list'
 
 # Singleton_class for working with database
 class Database

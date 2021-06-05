@@ -1,4 +1,4 @@
-require_relative 'DBwork'
+require_relative '../Package Model/DBwork'
 require 'yaml'
 
 class Facade

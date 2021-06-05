@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'Employee_list'
-require_relative 'Validator'
-require_relative 'DBwork'
+require_relative '../Package Model/employee_list'
+require_relative '../Package Model/validator'
+require_relative '../Package Model/DBwork'
 require 'mysql2'
 
 ############################################################################################################

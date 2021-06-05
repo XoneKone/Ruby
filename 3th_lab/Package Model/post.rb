@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative 'Salary'
+require_relative 'salary'
 # class Post
 class Post
   include Comparable

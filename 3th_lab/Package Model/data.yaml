@@ -13,6 +13,19 @@
   post: Junior
   prevsalary: 50000
 - !ruby/object:Employee
+  id: 2
+  fullname: Иванов Иван Иванович
+  birthdate: 10.12.1998
+  mobphone: 8-912-2128533
+  address: ул. Красная, д. Колотушкина
+  email: ivan@mail.ru
+  passport: 03 13 473118
+  specialization: Инженер
+  workexp: 5
+  prevnamework: Газ-Пром
+  post: Старший инженер
+  prevsalary: 100000
+- !ruby/object:Employee
   id: 11
   fullname: Горин Геннадий Геннадьевич
   birthdate: 05.05.1987
@@ -38,16 +51,3 @@
   prevnamework: Sberbank
   post: Начальник отдела
   prevsalary: 80000
-- !ruby/object:Employee
-  id: 2
-  fullname: Иванов Иван Иванович
-  birthdate: 10.12.1998
-  mobphone: 8-912-2128533
-  address: ул. Красная, д. Колотушкина
-  email: ivan@mail.ru
-  passport: 03 13 473118
-  specialization: Инженер
-  workexp: 5
-  prevnamework: Газ-Пром
-  post: Старший инженер
-  prevsalary: 100000
