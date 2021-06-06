@@ -19,9 +19,9 @@ class Employee
   #                                   Setters                                                           #
   #                                                                                                     #
   #######################################################################################################
-  attr_accessor :id, :address, :specialization, :post
+  attr_accessor :id, :address, :specialization
 
-  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :specialization, :workexp, :prevnamework, :post, :prevsalary
+  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :workexp, :prevnamework, :prevsalary, :post
 
   def fullname=(fullname)
     @fullname = Validator.to_valid_fullname fullname
@@ -48,6 +48,15 @@ class Employee
     @workexp = workexp.to_i.negative? ? 0 : workexp.to_i
   end
 
+  def post=(post)
+    @post = post
+    @post.employee = self unless post.nil?
+  end
+
+  def create_post(post_id)
+    post_id.nil? ? nil : Database.instance.read_DB_post(post_id)
+  end
+
   def prevnamework=(prevnamework)
     @prevnamework = @workexp.zero? ? 'NA' : prevnamework
   end
@@ -62,7 +71,7 @@ class Employee
   #                                                                                                     #
   #######################################################################################################
 
-  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = nil, prevsalary = 0)
+  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post_id = nil, prevsalary = 0)
     self.id = id.to_i
     self.fullname = fullname
     self.birthdate = birthdate
@@ -73,12 +82,13 @@ class Employee
     self.specialization = specialization
     self.workexp = workexp
     self.prevnamework = prevnamework
-    self.post = post
+    self.post = create_post(post_id)
     self.prevsalary = prevsalary
   end
 
   def data
-    [fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
+    post_name = post.nil? ? 'NULL' : post.post_name
+    [fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post_name, prevsalary]
   end
 
   #######################################################################################################
@@ -97,7 +107,7 @@ class Employee
       "#{specialization}\n" +
       "#{workexp}\n" +
       "#{prevnamework}\n" +
-      "#{post}\n" +
+      "#{post.post_name}\n" +
       "#{prevsalary}\n\n"
   end
 end

@@ -48,8 +48,8 @@ class EmployeeList
   # changing an employee in the list and in the database
   def change_node(id, what_change, change)
     change(find(:id, id), what_change, change)
-    h = { 'table' => 'Employees', 'what_change' => what_change, 'change' => change, 'field' => 'EmployeeID', 'id' => id }
-    Database.instance.change_node(h)
+    Database.instance.change_node({ 'table' => 'Employees', 'what_change' => what_change, 'change' => change,
+                                    'field' => 'EmployeeID', 'id' => id })
   end
 
   # deleting an employee from the list
@@ -85,7 +85,7 @@ class EmployeeList
 
   def write_list_XML
     File.open('data.xml', 'w') do |fl|
-      xml = Builder::XmlMarkup.new(:target => fl, :indent => 2)
+      xml = Builder::XmlMarkup.new(target: fl, indent: 2)
       xml.instruct!
       xml.Employees {
         employee_list.each do |k|

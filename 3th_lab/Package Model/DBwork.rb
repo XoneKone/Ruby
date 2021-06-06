@@ -47,6 +47,16 @@ class Database
     emp
   end
 
+  def read_DB_post(post_id)
+    post = nil
+    conn.query("SELECT * FROM Posts WHERE PostID = #{post_id}").each do |r|
+      post = Post.new(r['PostID'], r['PostName'], r['FixedSalary'], r['FixedPremiumBool'],
+                      r['FixedPremiumSize'], r['QuarterlyAwardBool'], r['QuarterlyAwardSize'], r['PossibleBonusBool'],
+                      r['PossibleBonusPercent'])
+    end
+    post
+  end
+
   def read_DB_post_list(department_id)
     res = []
     if department_id.nil?
