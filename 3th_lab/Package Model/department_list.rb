@@ -2,10 +2,10 @@ require_relative '../Package Model/DBwork'
 require 'yaml'
 
 class Facade
-  def initialize(seralize1 = nil, seralize2 = nil, seralize3 = nil)
-    @serialize1 = seralize1 || Serialize1.new
-    @serialize2 = seralize2 || Serialize2.new
-    @serialize3 = seralize3 || Serialize3.new
+  def initialize(serialize1 = nil, serialize2 = nil, serialize3 = nil)
+    @serialize1 = serialize1 || Serialize1.new
+    @serialize2 = serialize2 || Serialize2.new
+    @serialize3 = serialize3 || Serialize3.new
   end
 
   def serialize(dep_obj)
@@ -16,8 +16,6 @@ class Facade
 
   def deserialize
     @serialize1.deserialize
-    @serialize2.deserialize
-    @serialize3.deserialize
   end
 end
 
@@ -70,8 +68,8 @@ class DepartmentList
                                     'field' => 'DepartmentID', 'id' => department.id })
   end
 
-  def delete(post)
-    @department_list.delete(post)
+  def delete(department)
+    @department_list.delete(department)
     Database.instance.delete_node({ 'table' => 'Departments', 'field' => 'DepartmentID', 'id' => department.id })
   end
 

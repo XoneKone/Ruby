@@ -17,8 +17,6 @@ class TerminalViewListEmployee
 
   attr_accessor :list_employee
 
-
-
   def initialize
     self.list_employee = EmployeeList.new
   end
