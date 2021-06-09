@@ -1,5 +1,5 @@
 require_relative 'controller_list'
-require_relative '../Package View/terminal_view_department_list'
+require_relative '../Package View/view_department_list'
 require_relative '../Package Model/department_list'
 
 class ControllerDepartmentList < ControllerList
@@ -9,13 +9,16 @@ class ControllerDepartmentList < ControllerList
     @view_list.controller = self
   end
 
-  def factory_method
-    self.view_list = TerminalViewDepartmentList.new
-    self.list = DepartmentList.new
+  def initialize(view_list, list)
+    self.view_list = view_list
+    self.list = list
+  end
+
+  def self.factory_method
+    new(ViewDepartmentList.new(FXApp.new), DepartmentList.new)
   end
 
 end
 
-a = ControllerDepartmentList.new
-a.factory_method
-puts a
+a = ControllerDepartmentList.factory_method
+a.show_view

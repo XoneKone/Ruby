@@ -2,9 +2,10 @@ class ControllerList
 
   # there should be a composition here
   attr_accessor :view_list, :list, :instance
+  private_class_method :new
 
   def show_view
-    @view_list.show
+    @view_list.show_view
   end
 
   def show_list
@@ -33,7 +34,11 @@ class ControllerList
     @view_list.close
   end
 
-  def factory_method
+  def each_department(&block)
+    @list.each_department(&block)
+  end
+
+  def self.factory_method
     raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end
 end

@@ -12,7 +12,7 @@ require 'mysql2'
 ############################################################################################################
 
 # View
-class TerminalViewListEmployee
+class ViewEmployeeList
   include Validator
 
   attr_accessor :list_employee
@@ -247,6 +247,6 @@ want_to_find).nil? ? 'Такого работника нет!' : list_employee.f
   end
 end
 
-test = TerminalViewListEmployee.new
+test = ViewEmployeeList.new
 
 test.start

@@ -1,0 +1,2 @@
+class ControllerPostList < ControllerList
+end

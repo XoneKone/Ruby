@@ -19,4 +19,8 @@ class Department
   def data
     [dep_name]
   end
+
+  def to_s
+    "№#{id} #{dep_name}"
+  end
 end

@@ -1,0 +1,2 @@
+class ControllerDepartmentInstance < ControllerInstance
+end

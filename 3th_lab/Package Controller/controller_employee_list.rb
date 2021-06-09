@@ -1,0 +1,2 @@
+class ControllerEmployeeList < ControllerList
+end

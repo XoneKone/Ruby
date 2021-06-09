@@ -85,6 +85,11 @@ class DepartmentList
     @facade.deserialize
   end
 
+  def each_department(&block)
+    @department_list.each(&block)
+  end
+
+
   def read_DB
     Database.instance.read_DB_dep_list
   end
