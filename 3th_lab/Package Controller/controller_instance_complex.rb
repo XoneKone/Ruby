@@ -1,0 +1,2 @@
+class ControllerInstanceComplex < ControllerInstance
+end

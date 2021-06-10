@@ -63,13 +63,13 @@ class Database
       conn.query('SELECT * FROM Posts WHERE EmployeeID = NULL').each do |r|
         res << Post.new(r['PostID'], r['PostName'], r['FixedSalary'], r['FixedPremiumBool'],
                         r['FixedPremiumSize'], r['QuarterlyAwardBool'], r['QuarterlyAwardSize'], r['PossibleBonusBool'],
-                        r['PossibleBonusPercent'])
+                        r['PossibleBonusPercent'],r['DepartmentID'].to_i)
       end
     else
       conn.query("SELECT * FROM Posts WHERE DepartmentID = #{department_id}").each do |r|
         res << Post.new(r['PostID'], r['PostName'], r['FixedSalary'].to_i, r['FixedPremiumBool'].to_i,
                         r['FixedPremiumSize'].to_i, r['QuarterlyAwardBool'].to_i, r['QuarterlyAwardSize'].to_i,
-                        r['PossibleBonusBool'].to_i, r['PossibleBonusPercent'].to_i, r['EmployeeID'].to_i)
+                        r['PossibleBonusBool'].to_i, r['PossibleBonusPercent'].to_i,r['DepartmentID'].to_i, r['EmployeeID'].to_i)
       end
     end
     res

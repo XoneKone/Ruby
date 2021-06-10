@@ -19,9 +19,9 @@ class Employee
   #                                   Setters                                                           #
   #                                                                                                     #
   #######################################################################################################
-  attr_accessor :id, :address, :specialization
+  attr_accessor :id, :address, :specialization, :post
 
-  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :workexp, :prevnamework, :prevsalary, :post
+  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :workexp, :prevnamework, :prevsalary
 
   def fullname=(fullname)
     @fullname = Validator.to_valid_fullname fullname
@@ -46,15 +46,6 @@ class Employee
 
   def workexp=(workexp)
     @workexp = workexp.to_i.negative? ? 0 : workexp.to_i
-  end
-
-  def post=(post)
-    @post = post
-    @post.employee = self unless post.nil?
-  end
-
-  def create_post(post_id)
-    post_id.nil? ? nil : Database.instance.read_DB_post(post_id)
   end
 
   def prevnamework=(prevnamework)
@@ -82,7 +73,7 @@ class Employee
     self.specialization = specialization
     self.workexp = workexp
     self.prevnamework = prevnamework
-    self.post = create_post(post_id)
+    self.post = post_id
     self.prevsalary = prevsalary
   end
 

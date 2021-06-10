@@ -18,6 +18,11 @@ class ControllerDepartmentList < ControllerList
     new(ViewDepartmentList.new(FXApp.new), DepartmentList.new)
   end
 
+  def display_info_for(item, app)
+    dep = @list.choose_instance(item)
+    cont_instance = ControllerDepartmentInstance.factory_method()
+  end
+
 end
 
 a = ControllerDepartmentList.factory_method

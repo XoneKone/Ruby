@@ -1,0 +1,2 @@
+class ViewPostList
+end

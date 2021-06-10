@@ -29,13 +29,9 @@ class Post
     @post_id = post_id
     @post_name = post_name
     @salary = FixedSalary.new(fixed_salary)
-    if !possible_bonus_bool.zero?
-      @salary = BonusSalary.new(@salary, possible_bonus_percent)
-    elsif !quarterly_award_bool.zero?
-      @salary = QuartAwardSalary.new(@salary, quarterly_award_size)
-    elsif !fixed_premium_bool.zero?
-      @salary = PremiumSalary.new(@salary, fixed_premium_size)
-    end
+    @salary = BonusSalary.new(@salary, possible_bonus_percent) unless possible_bonus_bool.zero?
+    @salary = QuartAwardSalary.new(@salary, quarterly_award_size) unless quarterly_award_bool.zero?
+    @salary = PremiumSalary.new(@salary, fixed_premium_size) unless fixed_premium_bool.zero?
     @department = department
     self.employee = create_emp(employee_id)
   end

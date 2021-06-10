@@ -74,7 +74,7 @@ class DepartmentList
   end
 
   def choose(int)
-    @department_list[int - 1]
+    @department_list[int]
   end
 
   def serialize
@@ -96,3 +96,6 @@ class DepartmentList
 
 end
 
+d = DepartmentList.new
+
+p d

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require_relative 'view_list'
 
 class ViewDepartmentList < ViewList
@@ -17,8 +16,11 @@ class ViewDepartmentList < ViewList
   end
 
   def display_info_for(item)
-    cont_dep_instance = ControllerDepartmentInstance.factory_method(item)
-    cont_dep_instance.show_view
+    @controller.display_info_for(item, app)
+  end
+
+  def change_info(item)
+    # code here
   end
 
   def show_view
@@ -34,6 +36,12 @@ class ViewDepartmentList < ViewList
           FXMenuPane.new(self) do |menu_pane|
             info = FXMenuCommand.new(menu_pane, 'Подробнее об этом отделе')
             info.connect(SEL_COMMAND) { display_info_for(item) }
+
+            change = FXMenuCommand.new(menu_pane, 'Изменить')
+            change.connect(SEL_COMMAND) { change_info(item) }
+
+            delete_dep = FXMenuCommand.new(menu_pane, 'Удалить')
+            delete_dep.connect(SEL_COMMAND) { delete_department(item) }
 
             menu_pane.create
             menu_pane.popup(nil, event.root_x, event.root_y)
@@ -54,16 +62,14 @@ class ViewDepartmentList < ViewList
 
   end
 
-  def choose
-
+  def choose(number)
+    @controller.choose_instance(number)
   end
 
   def add_department
 
   end
 
-  def delete_department
-
-  end
+  def delete_department(number) end
 
 end

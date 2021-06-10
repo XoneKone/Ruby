@@ -1,7 +1,8 @@
 class ControllerList
 
   # there should be a composition here
-  attr_accessor :view_list, :list, :instance
+  attr_accessor :view_list, :list
+
   private_class_method :new
 
   def show_view
@@ -13,7 +14,7 @@ class ControllerList
   end
 
   def choose_instance(number)
-    @instance = @list.choose(number)
+    @list.choose(number)
   end
 
   def add_instance(args)
@@ -22,12 +23,8 @@ class ControllerList
     end
   end
 
-  def show_instance
-    @instance
-  end
-
   def delete_instance
-    list.delete(@instance) unless @instance.nil?
+    @list.delete(@instance) unless @instance.nil?
   end
 
   def close_view
