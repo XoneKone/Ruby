@@ -44,4 +44,8 @@ class Post
      possible_bonus_percent, dep_id, emp_id]
   end
 
+  def to_s
+    "#{post_name} ЗП: #{salary.get_salary}"
+  end
+
 end

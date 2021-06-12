@@ -1,12 +1,30 @@
-class ControllerList
+require_relative 'subject'
+
+class ControllerList < ConcreteSubject
 
   # there should be a composition here
-  attr_accessor :view_list, :list
+  attr_accessor :list
+  attr_reader :view_list
+
+  def view_list=(view_list)
+    @view_list = view_list
+    @view_list.controller = self
+  end
 
   private_class_method :new
 
+  def initialize(view_list, list)
+    self.view_list = view_list
+    self.list = list
+    self.observers = []
+  end
+
   def show_view
     @view_list.show_view
+  end
+
+  def display_info_for(item, app)
+    ;
   end
 
   def show_list
@@ -23,6 +41,10 @@ class ControllerList
     end
   end
 
+  def change_instance(number)
+    ;
+  end
+
   def delete_instance
     @list.delete(@instance) unless @instance.nil?
   end
@@ -31,8 +53,8 @@ class ControllerList
     @view_list.close
   end
 
-  def each_department(&block)
-    @list.each_department(&block)
+  def each_list(&block)
+    @list.each_list(&block)
   end
 
   def self.factory_method

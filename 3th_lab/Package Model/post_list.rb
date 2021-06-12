@@ -48,6 +48,10 @@ class PostList
     nil
   end
 
+  def each_list(&block)
+    @post_list.each(&block)
+  end
+
 end
 
 class Strategy

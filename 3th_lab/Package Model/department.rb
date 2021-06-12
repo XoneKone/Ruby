@@ -16,6 +16,11 @@ class Department
     Database.instance.read_DB_dep(dep_id)
   end
 
+  def save
+    Database.instance.change_node({ 'table' => 'Departments', 'what_change' => 'DepartmentName', 'change' => dep_name,
+                                    'field' => 'DepartmentID', 'id' => id })
+  end
+
   def data
     [dep_name]
   end

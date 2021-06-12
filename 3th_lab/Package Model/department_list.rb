@@ -85,7 +85,7 @@ class DepartmentList
     @facade.deserialize
   end
 
-  def each_department(&block)
+  def each_list(&block)
     @department_list.each(&block)
   end
 
@@ -96,6 +96,3 @@ class DepartmentList
 
 end
 
-d = DepartmentList.new
-
-p d

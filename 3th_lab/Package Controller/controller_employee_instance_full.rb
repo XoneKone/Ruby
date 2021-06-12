@@ -1,0 +1,3 @@
+class ControllerEmployeeInstanceFull < ControllerInstanceFull
+
+end
