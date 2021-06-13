@@ -94,11 +94,11 @@ class Database
   end
 
   def add_node(init_data)
-    escaped = init_data['data'].map do |value|
+    escaped = init_data[:data].map do |value|
       "'#{conn.escape(value)}'"
     end
-    p escaped.join(',')
-    conn.query("INSERT INTO #{init_data['table']}  VALUES (NULL, #{escaped.join(',')});")
+    puts escaped.join(',')
+    conn.query("INSERT INTO #{init_data[:table]}  VALUES (NULL, #{escaped.join(',')});")
   end
 
   def change_node(init_data)

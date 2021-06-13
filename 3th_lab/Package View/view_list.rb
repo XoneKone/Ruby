@@ -14,7 +14,7 @@ class ViewList < FXMainWindow
     FXHorizontalSeparator.new(self, LAYOUT_FILL_X | SEPARATOR_GROOVE | LAYOUT_SIDE_BOTTOM)
     @entity_list = FXList.new(self, opts: LIST_EXTENDEDSELECT | LAYOUT_FILL)
     self.connect(SEL_CLOSE, method(:on_close))
-    @add_button.connect(SEL_COMMAND) { add }
+    @add_button.connect(SEL_COMMAND) { on_add_instance }
   end
 
   def display_info_for(item)
@@ -39,10 +39,10 @@ class ViewList < FXMainWindow
             info.connect(SEL_COMMAND) { display_info_for(item) }
 
             change = FXMenuCommand.new(menu_pane, 'Изменить')
-            change.connect(SEL_COMMAND) { change_instance(item) }
+            change.connect(SEL_COMMAND) { on_change_instance(item) }
 
             delete = FXMenuCommand.new(menu_pane, 'Удалить')
-            delete.connect(SEL_COMMAND) { delete_instance(item) }
+            delete.connect(SEL_COMMAND) { on_delete_instance(item) }
 
             menu_pane.create
             menu_pane.popup(nil, event.root_x, event.root_y)
@@ -66,8 +66,8 @@ class ViewList < FXMainWindow
     end
   end
 
-  def add
-    @controller.add
+  def on_add_instance
+    @controller.on_add_instance(app)
   end
 
   def show_list
@@ -78,12 +78,12 @@ class ViewList < FXMainWindow
     @controller.choose_instance(item)
   end
 
-  def change_instance(item)
-    @controller.change_instance(item, app)
+  def on_change_instance(item)
+    @controller.on_change_instance(item, app)
   end
 
-  def delete_instance(item)
-    @controller.delete_instance(item)
+  def on_delete_instance(item)
+    @controller.on_delete_instance(item)
   end
 
   def save

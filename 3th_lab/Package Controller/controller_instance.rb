@@ -1,7 +1,7 @@
 require_relative 'subject'
 
 class ControllerInstance < ConcreteSubject
-  attr_accessor :instance
+  attr_accessor :instance, :controller_list
   attr_reader :view_instance
 
   def view_instance=(view_instance)
@@ -11,9 +11,10 @@ class ControllerInstance < ConcreteSubject
 
   private_class_method :new
 
-  def initialize(view_instance, instance)
+  def initialize(view_instance, instance, controller_list)
     self.view_instance = view_instance
     self.instance = instance
+    self.controller_list = controller_list
     self.observers = []
   end
 

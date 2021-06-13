@@ -37,7 +37,7 @@ class EmployeeList
   # adding an employee to the list and to the database
   def add_to_DB(data)
     add(Employee.new(get_last_id + 1, *data))
-    Database.instance.add_node({ 'data' => data, 'table': 'Employees' })
+    Database.instance.add_node({ data: data, table: 'Employees' })
   end
 
   # changing an employee in the list

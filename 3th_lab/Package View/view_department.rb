@@ -12,7 +12,7 @@ class ViewDepartment < ViewInstance
     matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS | LAYOUT_FILL)
     FXLabel.new(matrix, 'Департамент:')
     text = FXTextField.new(matrix, 20)
-    text.text = @controller.full_data[0]
+    @controller.fill_form(text)
     @button_cancel = FXButton.new(self, 'Отмена', opts: TEXTFIELD_NORMAL | LAYOUT_SIDE_BOTTOM | LAYOUT_FILL_X)
     @button_save = FXButton.new(self, 'Сохранить', opts: TEXTFIELD_NORMAL | LAYOUT_SIDE_BOTTOM | LAYOUT_FILL_X)
 

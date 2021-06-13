@@ -1,0 +1,137 @@
+--- !ruby/object:DepartmentList
+department_list:
+- &1 !ruby/object:Department
+  id: 1
+  dep_name: Бухгалтеры
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *1
+    post_list:
+    - &2 !ruby/object:Post
+      post_id: 1
+      post_name: Аналитик
+      salary: !ruby/object:PremiumSalary
+        salary: !ruby/object:QuartAwardSalary
+          salary: !ruby/object:BonusSalary
+            salary: !ruby/object:FixedSalary
+              fixed_salary: 50000
+            percent: 5
+          percent: 10
+        premium: 2500
+      department: *1
+      employee: !ruby/object:Employee
+        id: 1
+        fullname: Хван Константин Леонидович
+        birthdate: 13.10.2000
+        mobphone: 8-918-213213
+        address: ул. Пушкина, д. Колотушкина
+        email: kostya@mail.ru
+        passport: 03 23 413212
+        specialization: Программист
+        workexp: 2
+        prevnamework: Спортмастер
+        post: *2
+        prevsalary: 50000
+    - &3 !ruby/object:Post
+      post_id: 3
+      post_name: Бухгалтер
+      salary: !ruby/object:PremiumSalary
+        salary: !ruby/object:BonusSalary
+          salary: !ruby/object:FixedSalary
+            fixed_salary: 30000
+          percent: 10
+        premium: 2500
+      department: *1
+      employee: !ruby/object:Employee
+        id: 14
+        fullname: Сидоров Петр Иванович
+        birthdate: 23.11.1988
+        mobphone: 8-928-3456789
+        address: ул. Победы, кв. 133
+        email: petro@mail.ru
+        passport: 02 94 867584
+        specialization: Маркетолог
+        workexp: 3
+        prevnamework: Sberbank
+        post: *3
+        prevsalary: 80000
+- &4 !ruby/object:Department
+  id: 2
+  dep_name: Статистика
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *4
+    post_list: []
+- &5 !ruby/object:Department
+  id: 3
+  dep_name: Разработка
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *5
+    post_list:
+    - &6 !ruby/object:Post
+      post_id: 2
+      post_name: Junior-программист
+      salary: !ruby/object:PremiumSalary
+        salary: !ruby/object:QuartAwardSalary
+          salary: !ruby/object:FixedSalary
+            fixed_salary: 55000
+          percent: 5
+        premium: 3000
+      department: *5
+      employee: !ruby/object:Employee
+        id: 2
+        fullname: Иванов Иван Иванович
+        birthdate: 10.12.1998
+        mobphone: 8-912-2128533
+        address: ул. Красная, д. Колотушкина
+        email: ivan@mail.ru
+        passport: 03 13 473118
+        specialization: Инженер
+        workexp: 5
+        prevnamework: Газ-Пром
+        post: *6
+        prevsalary: 100000
+- &7 !ruby/object:Department
+  id: 4
+  dep_name: Логистика
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *7
+    post_list:
+    - &8 !ruby/object:Post
+      post_id: 5
+      post_name: Логист
+      salary: !ruby/object:PremiumSalary
+        salary: !ruby/object:QuartAwardSalary
+          salary: !ruby/object:BonusSalary
+            salary: !ruby/object:FixedSalary
+              fixed_salary: 40000
+            percent: 12
+          percent: 15
+        premium: 2340
+      department: *7
+      employee: !ruby/object:Employee
+        id: 11
+        fullname: Горин Геннадий Геннадьевич
+        birthdate: 05.05.1987
+        mobphone: 8-905-9823214
+        address: ул. Северная, д. 35
+        email: gena@mail.ru
+        passport: 02 01 846975
+        specialization: Программист
+        workexp: 5
+        prevnamework: Магнит
+        post: *8
+        prevsalary: 150000
+- &9 !ruby/object:Department
+  id: 6
+  dep_name: R
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *9
+    post_list: []
+facade: !ruby/object:Facade
+  serialize1: !ruby/object:Serialize1 {}
+  serialize2: !ruby/object:Serialize2 {}
+  serialize3: !ruby/object:Serialize3 {}

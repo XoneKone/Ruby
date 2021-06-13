@@ -19,7 +19,7 @@ class PostList
 
   def add(post)
     post_list.append(post)
-    Database.instance.add_node({ 'data' => post.data, 'table': 'Posts' })
+    Database.instance.add_node({ data: post.data, table: 'Posts' })
   end
 
   def change(post, what_change, change)

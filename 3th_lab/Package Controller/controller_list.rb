@@ -23,9 +23,7 @@ class ControllerList < ConcreteSubject
     @view_list.show_view
   end
 
-  def display_info_for(item, app)
-    ;
-  end
+  def display_info_for(item, app); end
 
   def show_list
     @list.show_list
@@ -35,18 +33,22 @@ class ControllerList < ConcreteSubject
     @list.choose(number)
   end
 
-  def add_instance(args)
-    args.each do
-      @list.add
-    end
+  def add_instance(arg)
+    @list.add(arg)
   end
 
-  def change_instance(number)
-    ;
+  def change(dep, what_change, change)
+    @list.change(dep, what_change, change)
   end
 
-  def delete_instance
-    @list.delete(@instance) unless @instance.nil?
+  def change_instance(number); end
+
+  def delete_instance(instance)
+    @list.delete(instance) unless instance.nil?
+  end
+
+  def get_last_id
+    @list.get_last_id
   end
 
   def close_view

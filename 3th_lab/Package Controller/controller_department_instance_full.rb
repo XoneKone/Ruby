@@ -3,12 +3,15 @@ require_relative '../Package View/view_department'
 
 class ControllerDepartmentInstanceFull < ControllerInstanceFull
 
-  def self.factory_method(app, department)
-    new(ViewDepartment.new(app), department)
+  def self.factory_method(app, department, controller_list)
+    new(ViewDepartment.new(app), department, controller_list)
+  end
+
+  def fill_form(text_field)
+    text_field.text = @instance.data[0]
   end
 
   def save(new_data)
-    @instance.dep_name = new_data
-    @instance.save
+    @controller_list.change(@instance, 'dep_name', new_data)
   end
 end
