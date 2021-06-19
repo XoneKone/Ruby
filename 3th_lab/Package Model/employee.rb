@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
-require_relative 'Validator'
+require_relative 'validator'
 
 #######################################################################################################
 #                                                                                                     #
@@ -19,24 +19,12 @@ class Employee
   #                                   Setters                                                           #
   #                                                                                                     #
   #######################################################################################################
-  def id
-    @id
-  end
+  attr_accessor :id, :address, :specialization, :post
 
-  def id=(id)
-    @id = id
-  end
-
-  def fullname
-    @fullname
-  end
+  attr_reader :fullname, :birthdate, :mobphone, :email, :passport, :workexp, :prevnamework, :prevsalary
 
   def fullname=(fullname)
     @fullname = Validator.to_valid_fullname fullname
-  end
-
-  def birthdate
-    @birthdate
   end
 
   def birthdate=(birthdate)
@@ -44,72 +32,24 @@ class Employee
 
   end
 
-  def mobphone
-    @mobphone
-  end
-
   def mobphone=(mobphone)
     @mobphone = Validator.to_valid_mobphone mobphone
-  end
-
-  def address
-    @address
-  end
-
-  def address=(address)
-    @address = address
-  end
-
-  def email
-    @email
   end
 
   def email=(email)
     @email = Validator.to_valid_email email
   end
 
-  def passport
-    @passport
-  end
-
   def passport=(passport)
     @passport = Validator.to_valid_passport passport
-  end
-
-  def specialization
-    @specialization
-  end
-
-  def specialization=(specialization)
-    @specialization = specialization
-  end
-
-  def workexp
-    @workexp
   end
 
   def workexp=(workexp)
     @workexp = workexp.to_i.negative? ? 0 : workexp.to_i
   end
 
-  def prevnamework
-    @prevnamework
-  end
-
   def prevnamework=(prevnamework)
     @prevnamework = @workexp.zero? ? 'NA' : prevnamework
-  end
-
-  def post
-    @post
-  end
-
-  def post=(post)
-    @post = @workexp.zero? ? 'NA' : post
-  end
-
-  def prevsalary
-    @prevsalary
   end
 
   def prevsalary=(prevsalary)
@@ -122,7 +62,7 @@ class Employee
   #                                                                                                     #
   #######################################################################################################
 
-  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post = '', prevsalary = 0)
+  def initialize(id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp = 0, prevnamework = '', post_id = nil, prevsalary = 0)
     self.id = id.to_i
     self.fullname = fullname
     self.birthdate = birthdate
@@ -133,12 +73,13 @@ class Employee
     self.specialization = specialization
     self.workexp = workexp
     self.prevnamework = prevnamework
-    self.post = post
+    self.post = post_id
     self.prevsalary = prevsalary
   end
 
-  def get_list
-    [id, fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post, prevsalary]
+  def data
+    post_name = post.nil? ? 'NULL' : post.post_name
+    [fullname, birthdate, mobphone, address, email, passport, specialization, workexp, prevnamework, post_name, prevsalary]
   end
 
   #######################################################################################################
@@ -157,7 +98,7 @@ class Employee
       "#{specialization}\n" +
       "#{workexp}\n" +
       "#{prevnamework}\n" +
-      "#{post}\n" +
+      "#{post.post_name}\n" +
       "#{prevsalary}\n\n"
   end
 end

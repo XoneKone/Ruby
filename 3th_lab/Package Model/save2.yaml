@@ -1,0 +1,52 @@
+--- !ruby/object:DepartmentList
+department_list:
+- &1 !ruby/object:Department
+  id: 1
+  dep_name: Бухгалтерия
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *1
+    post_list:
+    - !ruby/object:Post
+      post_id: 1
+      post_name: Аналитик
+      salary: !ruby/object:BonusSalary
+        salary: !ruby/object:FixedSalary
+          fixed_salary: 50000
+        percent: 5
+      department: *1
+      employee: 
+- &2 !ruby/object:Department
+  id: 2
+  dep_name: Статистика
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *2
+    post_list: []
+- &3 !ruby/object:Department
+  id: 3
+  dep_name: Разработка
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *3
+    post_list:
+    - !ruby/object:Post
+      post_id: 2
+      post_name: Junior-программист
+      salary: !ruby/object:QuartAwardSalary
+        salary: !ruby/object:FixedSalary
+          fixed_salary: 55000
+        percent: 5
+      department: *3
+      employee: 
+- &4 !ruby/object:Department
+  id: 4
+  dep_name: Логистика
+  post_list: !ruby/object:PostList
+    strategy: !ruby/object:WithDepStrategy {}
+    department: *4
+    post_list: []
+facade: !ruby/object:Facade
+  serialize1: !ruby/object:Serialize1 {}
+  serialize2: !ruby/object:Serialize2 {}
+  serialize3: !ruby/object:Serialize3 {}

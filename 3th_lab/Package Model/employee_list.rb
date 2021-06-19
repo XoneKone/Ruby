@@ -1,12 +1,12 @@
-require_relative 'Employee'
-require_relative 'testDB'
+require_relative 'employee'
+require_relative 'DBwork'
 require 'yaml'
 require 'json'
 require 'rexml/document'
 require 'builder'
 
 # Class for storing a list of employees
-class ListEmployee
+class EmployeeList
 
   attr_accessor :employee_list
 
@@ -26,7 +26,7 @@ class ListEmployee
 
   # reading data from a database
   def read_list_DB
-    @employee_list = Database.instance.select_all
+    @employee_list = Database.instance.read_DB_emp_list
   end
 
   # adding an employee to the list
@@ -37,7 +37,7 @@ class ListEmployee
   # adding an employee to the list and to the database
   def add_to_DB(data)
     add(Employee.new(get_last_id + 1, *data))
-    Database.instance.add_node(data)
+    Database.instance.add_node({ data: data, table: 'Employees' })
   end
 
   # changing an employee in the list
@@ -48,7 +48,8 @@ class ListEmployee
   # changing an employee in the list and in the database
   def change_node(id, what_change, change)
     change(find(:id, id), what_change, change)
-    Database.instance.change_node(id, what_change, change)
+    Database.instance.change_node({ 'table' => 'Employees', 'what_change' => what_change, 'change' => change,
+                                    'field' => 'EmployeeID', 'id' => id })
   end
 
   # deleting an employee from the list
@@ -59,7 +60,7 @@ class ListEmployee
   # deleting an employee from the list and from the database
   def delete_from_db(id)
     delete(find(:id, id))
-    Database.instance.delete_node(id)
+    Database.instance.delete_node({ 'table' => 'Employees', 'field' => 'EmployeeID', 'id' => id })
   end
 
   # writing data to the data.txt
@@ -84,7 +85,7 @@ class ListEmployee
 
   def write_list_XML
     File.open('data.xml', 'w') do |fl|
-      xml = Builder::XmlMarkup.new(:target => fl, :indent => 2)
+      xml = Builder::XmlMarkup.new(target: fl, indent: 2)
       xml.instruct!
       xml.Employees {
         employee_list.each do |k|
@@ -200,7 +201,7 @@ class ListEmployee
   end
 
   def read_list_JSON
-    file = YAML.load_file('data.json')
+    file = JSON.load_file('data.json')
     @employee_list = file
   end
 
@@ -212,7 +213,6 @@ class ListEmployee
     nil
   end
 
-  # @todo: implement task 13
   # showing all employees
   def show
     data = ''
